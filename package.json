@@ -1,0 +1,23 @@
+{
+  "name": "swayyum-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio website with Three.js 3D effects",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server -p 8000 -o",
+    "start": "npm run dev",
+    "build": "node build.js"
+  },
+  "keywords": [
+    "portfolio",
+    "threejs",
+    "github-pages"
+  ],
+  "author": "Swayyum",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {}
+}
+
