@@ -160,7 +160,7 @@ body {
     z-index: 100;
 }
 
-#ogl-container {
+#aurora-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -168,9 +168,10 @@ body {
     height: 100%;
     z-index: 1;
     pointer-events: none;
+    overflow: hidden;
 }
 
-#ogl-container canvas {
+#aurora-container canvas {
     display: block;
     width: 100%;
     height: 100%;
