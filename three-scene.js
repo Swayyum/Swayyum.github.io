@@ -183,8 +183,11 @@ const initThreeScene = () => {
         return;
     }
 
+    console.log('Three.js loaded, initializing 3D scene...');
+
     const heroSection = document.querySelector('.hero');
     if (!heroSection) {
+        console.warn('Hero section not found');
         return;
     }
 
@@ -204,6 +207,7 @@ const initThreeScene = () => {
         heroSection.appendChild(canvasContainer);
         
         threeScene = new ThreeScene(canvasContainer);
+        console.log('3D scene initialized successfully!');
         
         // Ensure hero content is above canvas
         const heroContent = document.querySelector('.hero-content');
@@ -216,20 +220,29 @@ const initThreeScene = () => {
     }
 };
 
-// Wait for Three.js to load
+// Wait for Three.js to load properly
+const waitForThree = () => {
+    if (typeof THREE !== 'undefined' && THREE.Scene) {
+        initThreeScene();
+    } else {
+        // Try again after a short delay
+        setTimeout(waitForThree, 50);
+    }
+};
+
+// Start waiting when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        // Wait a bit for Three.js script to load
-        setTimeout(initThreeScene, 100);
+        setTimeout(waitForThree, 100);
     });
 } else {
-    setTimeout(initThreeScene, 100);
+    setTimeout(waitForThree, 100);
 }
 
 // Also try when window loads (in case Three.js loads after DOMContentLoaded)
 window.addEventListener('load', () => {
-    if (!threeScene && typeof THREE !== 'undefined') {
-        setTimeout(initThreeScene, 100);
+    if (!threeScene) {
+        setTimeout(waitForThree, 100);
     }
 });
 
