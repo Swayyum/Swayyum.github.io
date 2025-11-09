@@ -154,10 +154,14 @@ body {
 }
 
 .hero-content {
-    max-width: 800px;
+    max-width: 1200px;
     animation: fadeInUp 1s ease;
     position: relative;
     z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
 }
 
 #aurora-container {
@@ -172,9 +176,12 @@ body {
 }
 
 #aurora-container canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .hero-title {
