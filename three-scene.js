@@ -25,8 +25,8 @@ class ThreeScene {
         // Camera setup
         const width = this.container.clientWidth;
         const height = this.container.clientHeight;
-        this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-        this.camera.position.z = 1000;
+        this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 2000);
+        this.camera.position.z = 800; // Closer for better visibility
 
         // Renderer setup
         this.renderer = new THREE.WebGLRenderer({ 
@@ -40,32 +40,41 @@ class ThreeScene {
     }
 
     createParticles() {
-        const particleCount = 2000;
+        const particleCount = 3000; // Increased for more visibility
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
         const sizes = new Float32Array(particleCount);
 
-        const color1 = new THREE.Color(0x6366f1); // Primary color
-        const color2 = new THREE.Color(0x8b5cf6); // Secondary color
+        // Brighter, more visible colors
+        const color1 = new THREE.Color(0x8b9aff); // Brighter blue
+        const color2 = new THREE.Color(0xb794f6); // Brighter purple
+        const color3 = new THREE.Color(0xffffff); // White for some particles
 
         for (let i = 0; i < particleCount; i++) {
             const i3 = i * 3;
             
-            // Position
+            // Position - closer to camera for better visibility
             positions[i3] = (Math.random() - 0.5) * 2000;
             positions[i3 + 1] = (Math.random() - 0.5) * 2000;
-            positions[i3 + 2] = (Math.random() - 0.5) * 2000;
+            positions[i3 + 2] = (Math.random() - 0.5) * 1500; // Closer range
 
-            // Color (interpolate between two colors)
+            // Color - mix of all three colors for variety
             const color = new THREE.Color();
-            color.lerpColors(color1, color2, Math.random());
+            const rand = Math.random();
+            if (rand < 0.4) {
+                color.copy(color1);
+            } else if (rand < 0.8) {
+                color.copy(color2);
+            } else {
+                color.copy(color3);
+            }
             colors[i3] = color.r;
             colors[i3 + 1] = color.g;
             colors[i3 + 2] = color.b;
 
-            // Size
-            sizes[i] = Math.random() * 3 + 1;
+            // Larger sizes for better visibility
+            sizes[i] = Math.random() * 5 + 2; // Increased from 3+1 to 5+2
         }
 
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -88,12 +97,13 @@ class ThreeScene {
                     vColor = color;
                     vec3 pos = position;
                     
-                    // Add wave effect
-                    pos.x += sin(time * 0.5 + position.y * 0.01) * 10.0;
-                    pos.y += cos(time * 0.3 + position.x * 0.01) * 10.0;
+                    // More pronounced wave effect for visibility
+                    pos.x += sin(time * 0.5 + position.y * 0.01) * 15.0;
+                    pos.y += cos(time * 0.3 + position.x * 0.01) * 15.0;
+                    pos.z += sin(time * 0.4 + position.x * 0.01) * 10.0;
                     
-                    // Mouse interaction
-                    vec2 mouseEffect = (mouse - vec2(pos.x, pos.y)) * 0.0001;
+                    // More noticeable mouse interaction
+                    vec2 mouseEffect = (mouse - vec2(pos.x, pos.y)) * 0.0002;
                     pos.xy += mouseEffect;
                     
                     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
@@ -107,7 +117,8 @@ class ThreeScene {
                 void main() {
                     float distanceToCenter = distance(gl_PointCoord, vec2(0.5));
                     float alpha = 1.0 - smoothstep(0.0, 0.5, distanceToCenter);
-                    gl_FragColor = vec4(vColor, alpha * 0.8);
+                    // Increased opacity for better visibility
+                    gl_FragColor = vec4(vColor, alpha * 1.2);
                 }
             `,
             transparent: true,
