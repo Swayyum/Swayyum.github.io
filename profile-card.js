@@ -397,7 +397,9 @@ class ProfileCard {
 
 // Initialize ProfileCard when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    const heroSection = document.querySelector('.hero-content');
+    const heroContainer = document.getElementById('profile-card-hero');
+    const heroSection = heroContainer || document.querySelector('.hero-content');
+    
     if (heroSection) {
         const profileCard = new ProfileCard({
             name: 'Swayam Mehta',
@@ -409,7 +411,10 @@ document.addEventListener('DOMContentLoaded', () => {
             enableTilt: true,
             enableMobileTilt: false,
             onContactClick: () => {
-                window.location.href = '#contact';
+                const contactSection = document.querySelector('#contact');
+                if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                }
             }
         });
 
@@ -417,7 +422,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const cardContainer = document.createElement('div');
         cardContainer.className = 'profile-card-container';
         cardContainer.appendChild(profileCard.getElement());
-        heroSection.appendChild(cardContainer);
+        
+        if (heroContainer) {
+            heroContainer.appendChild(cardContainer);
+        } else {
+            heroSection.appendChild(cardContainer);
+        }
     }
 });
 

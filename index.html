@@ -8,87 +8,103 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="profile-card.css">
     <link rel="stylesheet" href="glass-icons.css">
+    <link rel="stylesheet" href="gooey-nav.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">Swayam Mehta</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <button class="mobile-menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
+    <!-- Navigation - GooeyNav will be added by gooey-nav.js -->
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section id="intro" class="hero">
         <div class="container">
             <div class="hero-content">
+                <p class="greeting">Hello there!</p>
                 <h1 class="hero-title">
-                    <span class="greeting">Hello, I'm</span>
-                    <span class="name">Swayam Mehta</span>
+                    I am <span class="name">Swayam</span>,<br>
+                    a <span class="name">Software Developer</span>
                 </h1>
-                <p class="hero-subtitle">💭 In dev void</p>
-                <p class="hero-description">
-                    Developer passionate about building innovative solutions and exploring new technologies.
-                </p>
-                <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-primary">View Projects</a>
-                    <a href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+                <div class="hero-social">
+                    <a href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        <span>Github</span>
+                    </a>
+                    <a href="https://linkedin.com/in/swayam-mehta" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        <span>LinkedIn</span>
+                    </a>
                 </div>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="mouse"></div>
         </div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
+            <h2 class="section-title">About</h2>
             <div class="about-content">
-                <div class="about-text">
-                    <p>
-                        I'm a developer who loves creating impactful software solutions. 
-                        With a passion for clean code and innovative projects, I enjoy 
-                        building tools that solve real-world problems.
+                <div class="about-card">
+                    <p class="about-text">
+                        As a software developer, I am passionate about utilizing my skills in web development, 
+                        full-stack engineering, and modern technologies to drive innovation and build impactful 
+                        solutions. With hands-on experience in developing web applications, creating user interfaces, 
+                        and working with various frameworks, I bring a well-rounded technical foundation to solve 
+                        real-world challenges. You got problems? I got the solution!
                     </p>
-                    <p>
-                        My work spans across various technologies, and I'm always eager 
-                        to learn and explore new frameworks and methodologies.
-                    </p>
-                    <div class="achievements">
-                        <div class="achievement-badge">
-                            <span class="badge-icon">🦈</span>
-                            <span>Pull Shark</span>
-                        </div>
-                        <div class="achievement-badge">
-                            <span class="badge-icon">👥</span>
-                            <span>Pair Extraordinaire</span>
-                        </div>
-                    </div>
                 </div>
-                <div class="stats">
-                    <div class="stat-item">
-                        <div class="stat-number" data-target="22">0</div>
-                        <div class="stat-label">Repositories</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Section -->
+    <section id="expertise" class="expertise">
+        <div class="container">
+            <h2 class="section-title">Expertise</h2>
+            <div class="expertise-list">
+                <span class="expertise-item">JavaScript</span>
+                <span class="expertise-item">React</span>
+                <span class="expertise-item">Node.js</span>
+                <span class="expertise-item">Web Development</span>
+                <span class="expertise-item">Full-Stack Development</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+            <div class="experience-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <h3 class="timeline-company">Software Developer</h3>
+                        <span class="timeline-date">2023 - Present</span>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number" data-target="12">0</div>
-                        <div class="stat-label">Stars</div>
+                    <p class="timeline-description">
+                        Building modern web applications and contributing to open-source projects. 
+                        Focused on creating scalable solutions and improving user experiences.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="education">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            <div class="education-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <h3 class="timeline-school">Computer Science</h3>
+                        <span class="timeline-date">2020 - 2024</span>
                     </div>
+                    <p class="timeline-degree">Bachelor's Degree</p>
                 </div>
             </div>
         </div>
@@ -97,8 +113,8 @@
     <!-- Projects Section -->
     <section id="projects" class="projects">
         <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <p class="section-subtitle">A selection of my work and contributions</p>
+            <h2 class="section-title">Recent Works</h2>
+            <p class="section-subtitle">Here are some of my favorite projects I have done lately. Feel free to check them out.</p>
             <div class="projects-grid" id="projectsGrid">
                 <div class="project-skeleton">
                     <div class="skeleton-header"></div>
@@ -119,25 +135,40 @@
         </div>
     </section>
 
+    <!-- Technologies Section -->
+    <section id="technologies" class="technologies">
+        <div class="container">
+            <h2 class="section-title">Technologies</h2>
+            <div class="tech-list" id="techList">
+                <!-- Technologies will be populated dynamically -->
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
-            <p class="section-subtitle">Let's connect and collaborate</p>
-            <div class="contact-links">
-                <a href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer" class="contact-link">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    <span>GitHub</span>
-                </a>
-                <a href="https://linkedin.com/in/swayam-mehta" target="_blank" rel="noopener noreferrer" class="contact-link">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                    <span>LinkedIn</span>
-                </a>
+            <p class="section-subtitle">I love to hear from you. Whether you have a question or just want to chat about tech or coffee — shoot me a message.</p>
+            <div class="contact-info">
+                <div class="contact-details">
+                    <h3>Reach me at</h3>
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        <span>Email</span>
+                    </div>
+                </div>
+                <div class="contact-social">
+                    <h3>Social</h3>
+                    <div class="social-links">
+                        <a href="https://linkedin.com/in/swayam-mehta" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+                        <a href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer" class="social-link">Github</a>
+                    </div>
+                </div>
             </div>
+            <a href="mailto:your-email@example.com" class="btn btn-primary">Say Hello</a>
         </div>
     </section>
 
@@ -149,12 +180,10 @@
         </div>
     </footer>
 
+    <!-- GooeyNav -->
+    <script src="gooey-nav.js"></script>
     <!-- Aurora Background - Pure WebGL -->
     <script src="aurora-scene.js"></script>
-    <!-- Glass Icons -->
-    <script src="glass-icons.js"></script>
-    <!-- Profile Card -->
-    <script src="profile-card.js"></script>
     <!-- Main Script -->
     <script src="script.js"></script>
 </body>

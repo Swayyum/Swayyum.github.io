@@ -189,17 +189,39 @@ const escapeHtml = (text) => {
 // Navbar background on scroll
 const handleNavbarScroll = () => {
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+    if (!navbar) return; // Navbar doesn't exist (using GooeyNav instead)
+    try {
+        if (window.scrollY > 50) {
+            navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+        } else {
+            navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+        }
+    } catch (e) {
+        // Silently ignore if navbar is removed or not accessible
     }
+};
+
+// Populate technologies section
+const populateTechnologies = () => {
+    const techList = document.getElementById('techList');
+    if (!techList) return;
+
+    const technologies = ['JavaScript', 'React', 'Node.js', 'Python', 'HTML', 'CSS', 'Git', 'WebGL'];
+    
+    techList.innerHTML = technologies.map(tech => 
+        `<span class="tech-item">${tech}</span>`
+    ).join('');
 };
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     fetchRepositories();
     animateStats();
-    window.addEventListener('scroll', handleNavbarScroll);
+    populateTechnologies();
+    // Only add scroll listener if navbar exists (we're using GooeyNav, so this may not be needed)
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        window.addEventListener('scroll', handleNavbarScroll);
+    }
 });
 

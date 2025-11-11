@@ -5,7 +5,8 @@
     margin-top: 2rem;
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
 }
 
 .pc-card-wrapper {
@@ -24,8 +25,9 @@
     --rotate-x: 0deg;
     --rotate-y: 0deg;
     position: relative;
-    width: 100%;
-    max-width: 400px;
+    width: 90vw !important;
+    max-width: 1000px !important;
+    min-width: 700px !important;
 }
 
 .pc-behind {
@@ -60,8 +62,8 @@
 .pc-card {
     position: relative;
     width: 100%;
-    aspect-ratio: 3 / 4;
-    border-radius: 24px;
+    aspect-ratio: 5 / 4;
+    border-radius: 32px;
     overflow: hidden;
     background: var(--inner-gradient);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -72,7 +74,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    padding: 2rem;
+    padding: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -117,11 +119,11 @@
 }
 
 .pc-avatar-content .avatar {
-    width: 120px;
-    height: 120px;
+    width: 170px;
+    height: 170px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid rgba(255, 255, 255, 0.2);
+    border: 5px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -162,23 +164,24 @@
 }
 
 .pc-handle {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.9);
 }
 
 .pc-status {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.7);
 }
 
 .pc-contact-btn {
-    padding: 0.75rem 2rem;
+    padding: 1rem 2.5rem;
     background: rgba(255, 255, 255, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 12px;
     color: white;
     font-weight: 600;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
@@ -198,14 +201,14 @@
 }
 
 .pc-details h3 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
     color: white;
 }
 
 .pc-details p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.9);
     margin: 0;
 }
@@ -220,9 +223,21 @@
         aspect-ratio: 4 / 5;
     }
     
+    .pc-inside {
+        padding: 2rem;
+    }
+    
     .pc-avatar-content .avatar {
-        width: 100px;
+        width: 120px;
         height: 100px;
+    }
+    
+    .pc-details h3 {
+        font-size: 1.5rem;
+    }
+    
+    .pc-details p {
+        font-size: 1rem;
     }
 }
 
