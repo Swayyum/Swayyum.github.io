@@ -39,7 +39,7 @@ class ProfileCard {
             mobileTiltSensitivity: options.mobileTiltSensitivity || 5,
             miniAvatarUrl: options.miniAvatarUrl || options.avatarUrl,
             name: options.name || 'Swayam Mehta',
-            title: options.title || 'Software Engineer',
+            title: options.title || 'Computer Engineer',
             handle: options.handle || 'Swayyum',
             status: options.status || 'Online',
             contactText: options.contactText || 'Contact Me',
@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (heroSection) {
         const profileCard = new ProfileCard({
             name: 'Swayam Mehta',
-            title: 'Software Engineer',
+            title: 'Computer Engineer',
             handle: 'Swayyum',
             status: 'Online',
             contactText: 'Contact Me',

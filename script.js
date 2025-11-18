@@ -206,7 +206,12 @@ const populateTechnologies = () => {
     const techList = document.getElementById('techList');
     if (!techList) return;
 
-    const technologies = ['JavaScript', 'React', 'Node.js', 'Python', 'HTML', 'CSS', 'Git', 'WebGL'];
+    const technologies = [
+        'Python', 'C++', 'C', 'JavaScript', 'TypeScript', 
+        'React', 'Node.js', 'TensorFlow', 'Machine Learning', 
+        'Embedded Systems', 'IoT', 'Jupyter Notebooks', 
+        'Git', 'WebGL', 'HTML', 'CSS'
+    ];
     
     techList.innerHTML = technologies.map(tech => 
         `<span class="tech-item">${tech}</span>`
