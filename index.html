@@ -1,195 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Swayam Mehta's Portfolio - Computer Engineer specializing in embedded systems, machine learning, and full-stack development">
-    <title>Swayam Mehta | Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="profile-card.css">
-    <link rel="stylesheet" href="glass-icons.css">
-    <link rel="stylesheet" href="gooey-nav.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Swayam Mehta — apps and Raycast plugins. Fluxon, Typatro, and more.">
+  <meta name="theme-color" content="#F4F4F5">
+  <title>Swayam Mehta — Apps & Tools</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="micro-transitions.css">
+  <link rel="stylesheet" href="rare-ui.css">
+  <link rel="stylesheet" href="motion-polish.css">
 </head>
 <body>
-    <!-- Navigation - GooeyNav will be added by gooey-nav.js -->
+  <div class="noise" aria-hidden="true"></div>
+  <div class="crosshair crosshair-tl" aria-hidden="true">+</div>
+  <div class="crosshair crosshair-tr" aria-hidden="true">+</div>
+  <div class="crosshair crosshair-bl" aria-hidden="true">+</div>
+  <div class="crosshair crosshair-br" aria-hidden="true">+</div>
 
-    <!-- Hero Section -->
-    <section id="intro" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <p class="greeting">Hello there!</p>
-                <h1 class="hero-title">
-                    I am <span class="name">Swayam</span>,<br>
-                    a <span class="name">Computer Engineer</span>
-                </h1>
-                <div class="hero-social">
-                    <a href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer" class="social-link">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                        <span>Github</span>
-                    </a>
-                    <a href="https://linkedin.com/in/swayam-mehta" target="_blank" rel="noopener noreferrer" class="social-link">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                        <span>LinkedIn</span>
-                    </a>
-                </div>
-            </div>
+  <header class="site-header">
+    <a class="brand" href="#top">
+      <span class="brand-mark">■</span>
+      <span>SWAYAM MEHTA</span>
+      <span class="brand-reg">®</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#units">[ UNITS ]</a>
+      <a href="#dossier">[ DOSSIER ]</a>
+      <a href="#raycast">[ RAYCAST ]</a>
+      <a href="#manifest">[ MANIFEST ]</a>
+      <a class="micro-btn is-ink is-magnetic is-sm" data-micro="sparkle" href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer">
+        <span class="micro-btn__inner">
+          <span class="micro-btn__icon">
+            <span class="micro-icon-slot is-a"><svg viewBox="0 0 24 24" data-fill="1" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.84 9.7.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.05A9.2 9.2 0 0112 6.84c.85.01 1.71.12 2.51.35 1.9-1.32 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .26.18.58.69.48A10.03 10.03 0 0022 12.26C22 6.58 17.52 2 12 2z"/></svg></span>
+            <span class="micro-icon-slot is-b"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.9 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg></span>
+            <span class="micro-spark is-1"><svg viewBox="0 0 24 24" data-fill="1" aria-hidden="true"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6-6.2-4.5-6.2 4.5 2.4-7.6L2 9.6h7.6z"/></svg></span>
+            <span class="micro-spark is-2"><svg viewBox="0 0 24 24" data-fill="1" aria-hidden="true"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6-6.2-4.5-6.2 4.5 2.4-7.6L2 9.6h7.6z"/></svg></span>
+          </span>
+          <span class="micro-btn__label">GITHUB</span>
+        </span>
+      </a>
+    </nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <nav id="mobile-nav" class="mobile-nav" hidden>
+    <a href="#units">[ UNITS ]</a>
+    <a href="#dossier">[ DOSSIER ]</a>
+    <a href="#raycast">[ RAYCAST ]</a>
+    <a href="#manifest">[ MANIFEST ]</a>
+    <a href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer">&gt;&gt;&gt; GITHUB</a>
+  </nav>
+
+  <main id="top" class="page">
+    <!-- ATTENTION -->
+    <section class="hero">
+      <div class="hero-meta">
+        <span>REV 2.0</span>
+        <span>SWAYAM MEHTA</span>
+        <span id="clock">00:00:00</span>
+      </div>
+      <div class="hero-split">
+        <div class="hero-copy">
+          <p class="hero-kicker">&lt; SWAYAM MEHTA / LIVE &gt;</p>
+          <h1 class="hero-title">SWAYAM<br>MEHTA</h1>
+          <p class="hero-line">
+            Sharp apps and Raycast tools for people who live in terminals, menus, and system panels.
+          </p>
+          <div class="hero-actions">
+            <a class="micro-btn is-primary is-magnetic" data-micro="slide-arrow" href="#units">
+              <span class="micro-btn__inner">
+                <span class="micro-btn__icon">
+                  <span class="micro-icon-slot is-a"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7v7H4z"/><path d="M13 4h7v7h-7z"/><path d="M4 13h7v7H4z"/><path d="M13 13h7v7h-7z"/></svg></span>
+                  <span class="micro-icon-slot is-b"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                </span>
+                <span class="micro-btn__label">OPEN UNITS</span>
+              </span>
+            </a>
+            <a class="micro-btn is-ghost is-magnetic" data-micro="morph" href="#raycast">
+              <span class="micro-btn__inner">
+                <span class="micro-btn__icon">
+                  <span class="micro-icon-slot is-a"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v6"/><path d="M12 15v6"/><path d="M3 12h6"/><path d="M15 12h6"/><path d="M6.3 6.3l4.2 4.2"/><path d="M13.5 13.5l4.2 4.2"/><path d="M17.7 6.3l-4.2 4.2"/><path d="M10.5 13.5l-4.2 4.2"/></svg></span>
+                  <span class="micro-icon-slot is-b"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                </span>
+                <span class="micro-btn__label">RAYCAST INDEX</span>
+              </span>
+            </a>
+          </div>
         </div>
+        <div class="hero-visual">
+          <div class="frame-label">
+            <span>[ FIG.01 / FLUXON ]</span>
+            <span>IMG_SCALE</span>
+          </div>
+          <div class="hero-frame media-scale">
+            <img
+              src="https://raw.githubusercontent.com/Swayyum/fluxon-releases/main/docs/media/hero.png"
+              alt="Fluxon System Overview dashboard"
+              width="1440"
+              height="900"
+              fetchpriority="high"
+            >
+            <div class="halftone" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">About</h2>
-            <div class="about-content">
-                <div class="about-card">
-                    <p class="about-text">
-                        As a computer engineer, I am passionate about bridging the gap between hardware and software, 
-                        working across embedded systems, machine learning, and full-stack development. With hands-on 
-                        experience in embedded IoT systems, ML/AI projects, web applications, and low-level programming, 
-                        I bring a comprehensive technical foundation that spans from hardware to cloud. From microcontrollers 
-                        to neural networks, I solve real-world challenges across the entire computing spectrum. 
-                        You got problems? I got the solution!
-                    </p>
-                </div>
-            </div>
+    <!-- INTEREST: marquee -->
+    <section class="marquee-band" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-inner">
+          <span>FLUXON</span><span>///</span>
+          <span>TYPATRO</span><span>///</span>
+          <span>IP FINDER</span><span>///</span>
+          <span>BHAGAVAD GITA</span><span>///</span>
+          <span>RAYCAST</span><span>///</span>
+          <span>MACOS</span><span>///</span>
+          <span>TERMINAL</span><span>///</span>
+          <span>SWAYAM MEHTA</span><span>///</span>
         </div>
+        <div class="marquee-inner" aria-hidden="true">
+          <span>FLUXON</span><span>///</span>
+          <span>TYPATRO</span><span>///</span>
+          <span>IP FINDER</span><span>///</span>
+          <span>BHAGAVAD GITA</span><span>///</span>
+          <span>RAYCAST</span><span>///</span>
+          <span>MACOS</span><span>///</span>
+          <span>TERMINAL</span><span>///</span>
+          <span>SWAYAM MEHTA</span><span>///</span>
+        </div>
+      </div>
     </section>
 
-    <!-- Expertise Section -->
-    <section id="expertise" class="expertise">
-        <div class="container">
-            <h2 class="section-title">Expertise</h2>
-            <div class="expertise-list">
-                <span class="expertise-item">Embedded Systems</span>
-                <span class="expertise-item">Machine Learning</span>
-                <span class="expertise-item">Python</span>
-                <span class="expertise-item">C/C++</span>
-                <span class="expertise-item">JavaScript/TypeScript</span>
-                <span class="expertise-item">Full-Stack Development</span>
-                <span class="expertise-item">IoT Development</span>
-            </div>
-        </div>
+    <!-- INTEREST: dense telemetry index -->
+    <section id="units" class="section telemetry">
+      <div class="section-rule">
+        <span class="rule-id">SYS / PRODUCT INDEX</span>
+        <span class="rule-line"></span>
+        <span class="rule-id">LIVE CATALOG</span>
+      </div>
+      <div class="telemetry-head">
+        <h2>SHIPPED<br>UNITS</h2>
+        <p class="scrub-text">
+          Desktop monitors, terminal roguelikes, and command-bar utilities — built as durable tools, indexed here as they leave the bay.
+        </p>
+      </div>
+      <div id="telemetry-grid" class="telemetry-grid"></div>
     </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="experience">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="experience-timeline">
-                <div class="timeline-item">
-                    <div class="timeline-header">
-                        <h3 class="timeline-company">Computer Engineer</h3>
-                        <span class="timeline-date">2023 - Present</span>
-                    </div>
-                    <p class="timeline-description">
-                        Developing embedded systems, machine learning models, and full-stack applications. 
-                        Contributing to open-source projects spanning IoT, AI, and web technologies. 
-                        Focused on creating innovative solutions that bridge hardware and software.
-                    </p>
-                </div>
-            </div>
-        </div>
+    <!-- DESIRE: pinned stack -->
+    <section id="stack" class="section stack-section">
+      <div class="stack-layout">
+        <aside class="stack-pin">
+          <p class="pin-kicker">[ DESIRE / SCROLL ]</p>
+          <h2>ACTIVE<br>PAYLOAD</h2>
+          <p class="pin-copy">Pinned briefing while units stack through the viewport.</p>
+          <dl class="pin-stats">
+            <div><dt>APPS</dt><dd id="stat-apps">02</dd></div>
+            <div><dt>PLUGINS</dt><dd id="stat-plugins">02</dd></div>
+            <div><dt>STATUS</dt><dd class="stat-live">LIVE</dd></div>
+          </dl>
+        </aside>
+        <div id="stack-cards" class="stack-cards"></div>
+      </div>
     </section>
 
-    <!-- Education Section -->
-    <section id="education" class="education">
-        <div class="container">
-            <h2 class="section-title">Education</h2>
-            <div class="education-timeline">
-                <div class="timeline-item">
-                    <div class="timeline-header">
-                        <h3 class="timeline-school">Computer Engineering</h3>
-                        <span class="timeline-date">2020 - 2024</span>
-                    </div>
-                    <p class="timeline-degree">Bachelor's Degree</p>
-                </div>
-            </div>
+    <!-- DOSSIER / Rare UI Folder + Resume -->
+    <section id="dossier" class="rare-folder-section">
+      <div class="section-rule">
+        <span class="rule-id">FILE / DOSSIER</span>
+        <span class="rule-line"></span>
+        <span class="rule-id">RESUME ACCESS</span>
+      </div>
+      <div class="rare-folder-layout">
+        <div class="rare-folder-copy">
+          <p class="rare-folder-hint">&lt; RARE UI / FOLDER &gt;</p>
+          <h2>OPEN THE<br>DOSSIER</h2>
+          <p>
+            Hover to fan the cards. Click to lift the flap. The marked sheet is the live resume —
+            click it to open the PDF.
+          </p>
+          <div class="rare-folder-actions">
+            <a class="micro-btn is-primary is-magnetic" id="open-resume" data-micro="morph" href="assets/Swayam_Mehta_Resume.pdf" target="_blank" rel="noopener noreferrer">
+              <span class="micro-btn__inner">
+                <span class="micro-btn__icon">
+                  <span class="micro-icon-slot is-a"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a1 1 0 00-1 1v16a1 1 0 001 1h12a1 1 0 001-1V8z"/><path d="M14 3v5h5"/><path d="M8 13h8"/><path d="M8 17h5"/></svg></span>
+                  <span class="micro-icon-slot is-b"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span>
+                </span>
+                <span class="micro-btn__label">OPEN RESUME</span>
+              </span>
+            </a>
+            <a class="micro-btn is-ghost is-magnetic" data-micro="slide-arrow" href="assets/Swayam_Mehta_Resume.pdf" download="Swayam_Mehta_Resume.pdf">
+              <span class="micro-btn__inner">
+                <span class="micro-btn__icon">
+                  <span class="micro-icon-slot is-a"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg></span>
+                  <span class="micro-icon-slot is-b"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+                </span>
+                <span class="micro-btn__label">DOWNLOAD PDF</span>
+              </span>
+            </a>
+          </div>
         </div>
+        <div id="rare-folder-root" aria-label="Animated dossier folder"></div>
+      </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title">Recent Works</h2>
-            <p class="section-subtitle">Here are some of my favorite projects I have done lately. Feel free to check them out.</p>
-            <div class="projects-grid" id="projectsGrid">
-                <div class="project-skeleton">
-                    <div class="skeleton-header"></div>
-                    <div class="skeleton-content"></div>
-                    <div class="skeleton-footer"></div>
-                </div>
-                <div class="project-skeleton">
-                    <div class="skeleton-header"></div>
-                    <div class="skeleton-content"></div>
-                    <div class="skeleton-footer"></div>
-                </div>
-                <div class="project-skeleton">
-                    <div class="skeleton-header"></div>
-                    <div class="skeleton-content"></div>
-                    <div class="skeleton-footer"></div>
-                </div>
-            </div>
-        </div>
+    <!-- RAYCAST: horizontal accordion -->
+    <section id="raycast" class="section raycast-section">
+      <div class="section-rule">
+        <span class="rule-id">EXT / RAYCAST</span>
+        <span class="rule-line"></span>
+        <span class="rule-id">HOTKEY SYSTEMS</span>
+      </div>
+      <div class="raycast-head">
+        <h2>COMMAND<br>BAR</h2>
+        <p>Hover a strip to expand. Install from the Raycast Store.</p>
+      </div>
+      <div id="accordion" class="accordion"></div>
+      <p class="store-note">
+        FULL STORE //
+        <a href="https://www.raycast.com/swayam_mehta" target="_blank" rel="noopener noreferrer">raycast.com/swayam_mehta</a>
+      </p>
     </section>
 
-    <!-- Technologies Section -->
-    <section id="technologies" class="technologies">
-        <div class="container">
-            <h2 class="section-title">Technologies</h2>
-            <div class="tech-list" id="techList">
-                <!-- Technologies will be populated dynamically -->
-            </div>
+    <!-- MANIFEST -->
+    <section id="manifest" class="section manifest">
+      <div class="manifest-grid">
+        <div class="manifest-copy">
+          <h2>SWAYAM<br>MEHTA</h2>
+          <p>
+            Computer engineer shipping native macOS tools, terminal experiences, and Raycast extensions.
+            Free for personal use where noted. Commercial licensing on request.
+          </p>
         </div>
+        <div class="manifest-links">
+          <a href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer">[ GITHUB ]</a>
+          <a href="https://linkedin.com/in/swayam-mehta" target="_blank" rel="noopener noreferrer">[ LINKEDIN ]</a>
+          <a href="https://www.raycast.com/swayam_mehta" target="_blank" rel="noopener noreferrer">[ RAYCAST ]</a>
+        </div>
+      </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <p class="section-subtitle">I love to hear from you. Whether you have a question or just want to chat about tech or coffee — shoot me a message.</p>
-            <div class="contact-info">
-                <div class="contact-details">
-                    <h3>Reach me at</h3>
-                    <div class="contact-item">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                        </svg>
-                        <span>Email</span>
-                    </div>
-                </div>
-                <div class="contact-social">
-                    <h3>Social</h3>
-                    <div class="social-links">
-                        <a href="https://linkedin.com/in/swayam-mehta" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
-                        <a href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer" class="social-link">Github</a>
-                    </div>
-                </div>
-            </div>
-            <a href="mailto:your-email@example.com" class="btn btn-primary">Say Hello</a>
-        </div>
+    <!-- ACTION -->
+    <section class="cta-band">
+      <p class="cta-kicker">&gt;&gt;&gt; NEXT ACTION</p>
+      <h2 class="cta-title">DEPLOY A UNIT</h2>
+      <div class="cta-actions" id="cta-actions"></div>
     </section>
+  </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Swayam Mehta. All rights reserved.</p>
-            <p class="footer-note">Built with ❤️ and hosted on GitHub Pages</p>
-        </div>
-    </footer>
+  <footer class="site-footer">
+    <div class="footer-left">
+      <span>SWAYAM MEHTA © <span id="year"></span></span>
+      <span>ALL RIGHTS RESERVED</span>
+    </div>
+    <div class="footer-right">
+      <span>DOC PAPER / HAZARD RED</span>
+      <span>REV 2.0</span>
+    </div>
+  </footer>
 
-    <!-- GooeyNav -->
-    <script src="gooey-nav.js"></script>
-    <!-- Aurora Background - Pure WebGL -->
-    <script src="aurora-scene.js"></script>
-    <!-- Main Script -->
-    <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="micro-transitions.js"></script>
+  <script src="rare-folder.js"></script>
+  <script src="rare-scroll.js"></script>
+  <script src="products.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
-

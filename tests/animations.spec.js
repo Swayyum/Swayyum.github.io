@@ -1,0 +1,166 @@
+/**
+ * Animation regression tests
+ *
+ * Reproduces broken scroll-reveal / GSAP+CSS transform conflicts:
+ * telem cells (and similar) must not remain stuck mid-tween
+ * (e.g. opacity 1 with scale 0.97 + translateY 36).
+ */
+
+const { test, expect } = require("@playwright/test");
+
+const BASE = process.env.SITE_URL || "http://127.0.0.1:8000";
+
+function parseMatrix(transform) {
+  if (!transform || transform === "none") {
+    return { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
+  }
+  const m2 = transform.match(/matrix\(([^)]+)\)/);
+  if (m2) {
+    const [a, b, c, d, tx, ty] = m2[1].split(",").map(Number);
+    return { a, b, c, d, tx, ty };
+  }
+  const m3 = transform.match(/matrix3d\(([^)]+)\)/);
+  if (m3) {
+    const v = m3[1].split(",").map(Number);
+    return { a: v[0], b: v[1], c: v[4], d: v[5], tx: v[12], ty: v[13] };
+  }
+  return { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
+}
+
+test.describe("scroll reveal animations", () => {
+  test("telem cells settle to identity transform after reveal", async ({
+    page,
+  }) => {
+    await page.goto(BASE, { waitUntil: "networkidle" });
+    await page.waitForTimeout(400);
+
+    await page.locator("#telemetry-grid").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await page.evaluate(() => {
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+    });
+    await page.waitForTimeout(800);
+
+    const states = await page.$$eval(".telem-cell", (els) =>
+      els.map((el) => {
+        const s = getComputedStyle(el);
+        return {
+          opacity: parseFloat(s.opacity),
+          transform: s.transform,
+        };
+      })
+    );
+
+    expect(states.length).toBeGreaterThan(0);
+
+    for (const state of states) {
+      expect(state.opacity).toBeGreaterThan(0.95);
+      const m = parseMatrix(state.transform);
+      // Must not remain stuck at gsap.from() start values (scale 0.97, y 36)
+      expect(Math.abs(m.a - 1)).toBeLessThan(0.02);
+      expect(Math.abs(m.d - 1)).toBeLessThan(0.02);
+      expect(Math.abs(m.ty)).toBeLessThan(2);
+      expect(Math.abs(m.tx)).toBeLessThan(2);
+    }
+  });
+
+  test("hero CTAs are visible after entrance orchestration", async ({
+    page,
+  }) => {
+    await page.goto(BASE, { waitUntil: "networkidle" });
+    await page.waitForTimeout(1200);
+
+    const btns = await page.$$eval(".hero-actions .micro-btn", (els) =>
+      els.map((el) => {
+        const s = getComputedStyle(el);
+        const r = el.getBoundingClientRect();
+        return {
+          opacity: parseFloat(s.opacity),
+          visible: r.width > 0 && r.height > 0 && r.bottom > 0,
+        };
+      })
+    );
+
+    expect(btns.length).toBeGreaterThan(0);
+    for (const btn of btns) {
+      expect(btn.opacity).toBeGreaterThan(0.95);
+      expect(btn.visible).toBe(true);
+    }
+  });
+
+  test("folder cards move on hover (spring fan-out)", async ({ page }) => {
+    await page.goto(BASE, { waitUntil: "networkidle" });
+    await page.locator("#dossier").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await page.evaluate(() => {
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+    });
+    await page.waitForTimeout(500);
+
+    // Wait until folder reveal has settled (no ongoing scale tween)
+    await page.waitForFunction(() => {
+      const root = document.getElementById("rare-folder-root");
+      if (!root) return false;
+      const t = getComputedStyle(root).transform;
+      return parseFloat(getComputedStyle(root).opacity) > 0.95 && (t === "none" || t.includes("1,"));
+    });
+
+    const before = await page.$eval(
+      '.rare-folder__card[data-slot="1"]',
+      (el) => getComputedStyle(el).transform
+    );
+
+    await page.locator(".rare-folder__stage").hover({ force: true });
+    await page.waitForTimeout(500);
+
+    const after = await page.$eval(
+      '.rare-folder__card[data-slot="1"]',
+      (el) => getComputedStyle(el).transform
+    );
+
+    expect(after).not.toBe(before);
+
+    const folderOpacity = await page.$eval("#rare-folder-root", (el) =>
+      parseFloat(getComputedStyle(el).opacity)
+    );
+    expect(folderOpacity).toBeGreaterThan(0.95);
+  });
+
+  test("no in-viewport reveal targets stuck at opacity 0", async ({ page }) => {
+    await page.goto(BASE, { waitUntil: "networkidle" });
+
+    const selectors = [
+      "#telemetry-grid",
+      "#stack",
+      "#dossier",
+      "#raycast",
+      "#manifest",
+      ".cta-band",
+    ];
+
+    for (const sel of selectors) {
+      await page.locator(sel).scrollIntoViewIfNeeded();
+      await page.waitForTimeout(700);
+    }
+
+    await page.evaluate(() => {
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+    });
+    await page.waitForTimeout(400);
+
+    const stuck = await page.evaluate(() => {
+      const targets = document.querySelectorAll(
+        ".telem-cell, .accordion-item, #rare-folder-root, .cta-actions .micro-btn, .manifest-links a, .hero-actions .micro-btn"
+      );
+      return [...targets]
+        .filter((el) => {
+          const r = el.getBoundingClientRect();
+          const inRoughView = r.bottom > 0 && r.top < window.innerHeight * 2;
+          return inRoughView && parseFloat(getComputedStyle(el).opacity) < 0.1;
+        })
+        .map((el) => el.className || el.id);
+    });
+
+    expect(stuck).toEqual([]);
+  });
+});

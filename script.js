@@ -1,232 +1,621 @@
-// Copyright © 2025 Sam Analytic Solutions
-// All rights reserved.
+// Swayam Mehta — industrial studio + GSAP motion
 
-const GITHUB_USERNAME = 'Swayyum';
-const GITHUB_API_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=12`;
+const yearEl = document.getElementById("year");
+if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+const clockEl = document.getElementById("clock");
+function tickClock() {
+  if (!clockEl) return;
+  const now = new Date();
+  clockEl.textContent = now.toTimeString().slice(0, 8);
+}
+tickClock();
+setInterval(tickClock, 1000);
+
+const menuToggle = document.querySelector(".menu-toggle");
+const mobileNav = document.getElementById("mobile-nav");
+if (menuToggle && mobileNav) {
+  menuToggle.addEventListener("click", () => {
+    const open = mobileNav.classList.toggle("is-open");
+    mobileNav.hidden = !open;
+    menuToggle.setAttribute("aria-expanded", String(open));
+  });
+  mobileNav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileNav.classList.remove("is-open");
+      mobileNav.hidden = true;
+      menuToggle.setAttribute("aria-expanded", "false");
     });
-});
-
-// Mobile menu toggle
-const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-const navLinks = document.querySelector('.nav-links');
-
-if (mobileMenuToggle) {
-    mobileMenuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        mobileMenuToggle.classList.toggle('active');
-    });
+  });
 }
 
-// Animate stats on scroll
-const animateStats = () => {
-    const stats = document.querySelectorAll('.stat-number');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = parseInt(entry.target.getAttribute('data-target'));
-                animateNumber(entry.target, target);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    stats.forEach(stat => observer.observe(stat));
-};
-
-const animateNumber = (element, target) => {
-    let current = 0;
-    const increment = target / 50;
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target;
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(current);
-        }
-    }, 30);
-};
-
-// Fetch and display GitHub repositories
-const fetchRepositories = async () => {
-    try {
-        const response = await fetch(GITHUB_API_URL);
-        if (!response.ok) {
-            throw new Error('Failed to fetch repositories');
-        }
-        const repos = await response.json();
-        displayProjects(repos);
-    } catch (error) {
-        console.error('Error fetching repositories:', error);
-        displayError();
-    }
-};
-
-const displayProjects = (repos) => {
-    const projectsGrid = document.getElementById('projectsGrid');
-    if (!projectsGrid) return;
-
-    // Filter out forks and sort by stars/updated
-    const filteredRepos = repos
-        .filter(repo => !repo.fork)
-        .sort((a, b) => {
-            // Sort by stars first, then by updated date
-            if (b.stargazers_count !== a.stargazers_count) {
-                return b.stargazers_count - a.stargazers_count;
-            }
-            return new Date(b.updated_at) - new Date(a.updated_at);
-        })
-        .slice(0, 9); // Show top 9 projects
-
-    projectsGrid.innerHTML = '';
-
-    if (filteredRepos.length === 0) {
-        projectsGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: var(--text-secondary);">No repositories found.</p>';
-        return;
-    }
-
-    filteredRepos.forEach(repo => {
-        const projectCard = createProjectCard(repo);
-        projectsGrid.appendChild(projectCard);
-    });
-};
-
-const createProjectCard = (repo) => {
-    const card = document.createElement('div');
-    card.className = 'project-card';
-
-    const description = repo.description || 'No description available.';
-    const topics = repo.topics || [];
-    const language = repo.language || '';
-
-    card.innerHTML = `
-        <div class="project-header">
-            <div>
-                <h3 class="project-title">${escapeHtml(repo.name)}</h3>
-            </div>
-        </div>
-        <p class="project-description">${escapeHtml(description)}</p>
-        ${topics.length > 0 ? `
-            <div class="project-topics">
-                ${topics.slice(0, 3).map(topic => `<span class="topic-tag">${escapeHtml(topic)}</span>`).join('')}
-            </div>
-        ` : ''}
-        <div class="project-footer">
-            <div class="project-links">
-                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="project-link">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    View Code
-                </a>
-                ${repo.homepage ? `
-                    <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="project-link">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" y1="14" x2="21" y2="3"></line>
-                        </svg>
-                        Live Demo
-                    </a>
-                ` : ''}
-            </div>
-            <div class="project-stats">
-                ${language ? `
-                    <span class="project-stat">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <circle cx="12" cy="12" r="10"/>
-                        </svg>
-                        ${escapeHtml(language)}
-                    </span>
-                ` : ''}
-                <span class="project-stat">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                    </svg>
-                    ${repo.stargazers_count}
-                </span>
-            </div>
-        </div>
-    `;
-
-    return card;
-};
-
-const displayError = () => {
-    const projectsGrid = document.getElementById('projectsGrid');
-    if (projectsGrid) {
-        projectsGrid.innerHTML = `
-            <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;">
-                    Unable to load projects at the moment.
-                </p>
-                <button onclick="fetchRepositories()" class="btn btn-primary" style="margin-top: 1rem;">
-                    Try Again
-                </button>
-            </div>
-        `;
-    }
-};
-
-const escapeHtml = (text) => {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-};
-
-// Navbar background on scroll
-const handleNavbarScroll = () => {
-    const navbar = document.querySelector('.navbar');
-    if (!navbar) return; // Navbar doesn't exist (using GooeyNav instead)
-    try {
-        if (window.scrollY > 50) {
-            navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-        } else {
-            navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-        }
-    } catch (e) {
-        // Silently ignore if navbar is removed or not accessible
-    }
-};
-
-// Populate technologies section
-const populateTechnologies = () => {
-    const techList = document.getElementById('techList');
-    if (!techList) return;
-
-    const technologies = [
-        'Python', 'C++', 'C', 'JavaScript', 'TypeScript', 
-        'React', 'Node.js', 'TensorFlow', 'Machine Learning', 
-        'Embedded Systems', 'IoT', 'Jupyter Notebooks', 
-        'Git', 'WebGL', 'HTML', 'CSS'
-    ];
-    
-    techList.innerHTML = technologies.map(tech => 
-        `<span class="tech-item">${tech}</span>`
-    ).join('');
-};
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    fetchRepositories();
-    animateStats();
-    populateTechnologies();
-    // Only add scroll listener if navbar exists (we're using GooeyNav, so this may not be needed)
-    const navbar = document.querySelector('.navbar');
-    if (navbar) {
-        window.addEventListener('scroll', handleNavbarScroll);
-    }
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener("click", (event) => {
+    const href = anchor.getAttribute("href");
+    if (!href || href === "#") return;
+    const target = document.querySelector(href);
+    if (!target) return;
+    event.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 });
 
+function linkButtons(links, sizeClass = "sm") {
+  if (typeof createMicroButton !== "function") {
+    return (links || [])
+      .map((link) => {
+        const cls = link.primary ? "btn btn-primary btn-sm" : "btn btn-ghost btn-sm";
+        return `<a class="${cls}" href="${link.href}" target="_blank" rel="noopener noreferrer">${link.label}</a>`;
+      })
+      .join("");
+  }
+
+  return (links || [])
+    .map((link) => {
+      const label = link.label.toLowerCase();
+      let micro = "slide-arrow";
+      let icon = "external";
+      let icon2 = "arrow";
+
+      if (label.includes("download")) {
+        micro = "morph";
+        icon = "download";
+        icon2 = "check";
+      } else if (label.includes("install")) {
+        micro = label.includes("raycast") ? "ring" : "morph";
+        icon = label.includes("raycast") ? "raycast" : "terminal";
+        icon2 = label.includes("raycast") ? "bellRing" : "check";
+      } else if (label.includes("github") || label.includes("releases")) {
+        micro = "sparkle";
+        icon = "github";
+        icon2 = "star";
+      }
+
+      return createMicroButton({
+        href: link.href,
+        label: link.label,
+        micro,
+        icon,
+        icon2,
+        variant: link.primary ? "primary" : "ghost",
+        size: sizeClass,
+        targetBlank: true,
+        doneLabel: label.includes("download") || label.includes("install") ? "Ready" : undefined,
+      });
+    })
+    .join("");
+}
+
+function renderCtaActions() {
+  const mount = document.getElementById("cta-actions");
+  if (!mount || typeof createMicroButton !== "function") return;
+
+  mount.innerHTML = [
+    createMicroButton({
+      href: "https://github.com/Swayyum/fluxon-releases/releases",
+      label: "Download Fluxon",
+      micro: "morph",
+      icon: "download",
+      icon2: "check",
+      variant: "primary",
+      size: "xl",
+      targetBlank: true,
+      doneLabel: "Fetched",
+    }),
+    createMicroButton({
+      href: "https://pypi.org/project/typatro/",
+      label: "Install Typatro",
+      micro: "slide-arrow",
+      icon: "terminal",
+      icon2: "arrow",
+      variant: "ghost",
+      size: "xl",
+      targetBlank: true,
+    }),
+  ].join("");
+}
+
+function renderTelemetry() {
+  const mount = document.getElementById("telemetry-grid");
+  if (!mount || typeof PRODUCTS === "undefined") return;
+
+  const apps = PRODUCTS.filter((p) => p.kind === "app");
+  const plugins = PRODUCTS.filter((p) => p.kind === "raycast");
+
+  const appCells = apps
+    .map(
+      (app, index) => `
+      <article class="telem-cell is-app">
+        <div>
+          <div class="telem-top">
+            <span>[ UNIT / ${String(index + 1).padStart(2, "0")} ]</span>
+            <span class="telem-status">${app.status}</span>
+          </div>
+          <h3 class="telem-name">${app.name}</h3>
+          <p class="telem-tag">${app.tagline}</p>
+        </div>
+        <div class="telem-actions">${linkButtons(app.links)}</div>
+      </article>`
+    )
+    .join("");
+
+  const pluginCells = plugins
+    .map(
+      (plugin, index) => `
+      <article class="telem-cell is-plugin">
+        <div>
+          <div class="telem-top">
+            <span>[ EXT / ${String(index + 1).padStart(2, "0")} ]</span>
+            <span class="telem-status">${plugin.platform}</span>
+          </div>
+          <h3 class="telem-name">${plugin.name}</h3>
+          <p class="telem-tag">${plugin.tagline}</p>
+        </div>
+        <div class="telem-actions">${linkButtons(plugin.links)}</div>
+      </article>`
+    )
+    .join("");
+
+  const upcomingCell =
+    typeof UPCOMING !== "undefined" && UPCOMING.length
+      ? `
+    <article class="telem-cell is-wide">
+      <div>
+        <div class="telem-top">
+          <span>[ BAY / NEXT ]</span>
+          <span class="telem-status">STANDBY</span>
+        </div>
+        <h3 class="telem-name">${UPCOMING[0].name}</h3>
+        <p class="telem-tag">${UPCOMING[0].tagline}</p>
+      </div>
+    </article>`
+      : "";
+
+  mount.innerHTML = appCells + pluginCells + upcomingCell;
+
+  const appStat = document.getElementById("stat-apps");
+  const pluginStat = document.getElementById("stat-plugins");
+  if (appStat) appStat.textContent = String(apps.length).padStart(2, "0");
+  if (pluginStat) pluginStat.textContent = String(plugins.length).padStart(2, "0");
+}
+
+function renderStackCards() {
+  const mount = document.getElementById("stack-cards");
+  if (!mount || typeof PRODUCTS === "undefined") return;
+
+  const featured = PRODUCTS.filter((p) => p.kind === "app" && p.image);
+  mount.innerHTML = featured
+    .map(
+      (app) => `
+      <article class="stack-card">
+        <div class="stack-card-media">
+          <img src="${app.image}" alt="${app.imageAlt || app.name}" loading="lazy" width="1200" height="750">
+          <div class="halftone" aria-hidden="true"></div>
+        </div>
+        <div class="stack-card-body">
+          <div>
+            <div class="telem-top">
+              <span>${app.platform}</span>
+              <span class="telem-status">${app.status}</span>
+            </div>
+            <h3>${app.name}</h3>
+            <p>${app.description}</p>
+          </div>
+          <div class="telem-actions">${linkButtons(app.links)}</div>
+        </div>
+      </article>`
+    )
+    .join("");
+}
+
+function renderAccordion() {
+  const mount = document.getElementById("accordion");
+  if (!mount || typeof PRODUCTS === "undefined") return;
+
+  const plugins = PRODUCTS.filter((p) => p.kind === "raycast");
+  mount.innerHTML = plugins
+    .map(
+      (plugin, index) => `
+      <article class="accordion-item${index === 0 ? " is-open" : ""}" tabindex="0">
+        <div>
+          <p class="accordion-meta">[ SLOT / ${String(index + 1).padStart(2, "0")} ] // ${plugin.platform}</p>
+          <h3>${plugin.name}</h3>
+        </div>
+        <div class="accordion-body">
+          <p>${plugin.description}</p>
+          <div class="telem-actions">${linkButtons(plugin.links)}</div>
+        </div>
+      </article>`
+    )
+    .join("");
+
+  const items = [...mount.querySelectorAll(".accordion-item")];
+  items.forEach((item) => {
+    const activate = () => {
+      items.forEach((el) => el.classList.remove("is-open"));
+      item.classList.add("is-open");
+    };
+    item.addEventListener("mouseenter", activate);
+    item.addEventListener("focus", activate);
+  });
+}
+
+function initMotion() {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Marquee — linear loop (constant speed by design)
+  const track = document.querySelector(".marquee-track");
+  if (track) {
+    const width = track.scrollWidth / 2;
+    gsap.to(track, {
+      x: -width,
+      duration: 28,
+      ease: "none",
+      repeat: -1,
+    });
+  }
+
+  // Hero orchestration — stagger + spring + scale-in
+  const heroTl = gsap.timeline({
+    defaults: { ease: "power3.out" },
+  });
+  heroTl
+    .from(".hero-meta span", {
+      y: 14,
+      opacity: 0,
+      stagger: 0.07,
+      duration: 0.45,
+    })
+    .from(
+      ".hero-kicker",
+      { y: 18, opacity: 0, duration: 0.4 },
+      "-=0.15"
+    )
+    .from(
+      ".hero-title",
+      {
+        y: 48,
+        opacity: 0,
+        duration: 0.85,
+        ease: "power4.out",
+      },
+      "-=0.2"
+    )
+    .from(
+      ".hero-line",
+      { y: 22, opacity: 0, duration: 0.5 },
+      "-=0.4"
+    )
+    .from(
+      ".hero-actions .micro-btn",
+      {
+        y: 18,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.45,
+        ease: "power3.out",
+        clearProps: "transform",
+      },
+      "-=0.28"
+    )
+    .from(
+      ".hero-frame",
+      {
+        y: 42,
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.9,
+        ease: "power3.out",
+      },
+      "-=0.55"
+    );
+
+  // Parallax — hero frame vs copy
+  const heroFrame = document.querySelector(".hero-frame");
+  if (heroFrame) {
+    gsap.to(heroFrame, {
+      yPercent: 12,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+  }
+
+  // Scroll-driven image scale / fade
+  gsap.utils.toArray(".media-scale, .stack-card-media").forEach((el) => {
+    gsap.fromTo(
+      el,
+      { scale: 0.88, opacity: 0.35 },
+      {
+        scale: 1,
+        opacity: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          end: "bottom 20%",
+          scrub: true,
+        },
+      }
+    );
+  });
+
+  // Scrubbing text reveal (word stagger tied to scroll)
+  const scrub = document.querySelector(".scrub-text");
+  if (scrub && !scrub.querySelector(".scrub-word")) {
+    const words = scrub.textContent.trim().split(/\s+/);
+    scrub.innerHTML = words
+      .map((w) => `<span class="scrub-word">${w}</span>`)
+      .join(" ");
+    gsap.fromTo(
+      scrub.querySelectorAll(".scrub-word"),
+      { opacity: 0.12 },
+      {
+        opacity: 1,
+        stagger: 0.04,
+        ease: "none",
+        scrollTrigger: {
+          trigger: scrub,
+          start: "top 80%",
+          end: "bottom 45%",
+          scrub: true,
+        },
+      }
+    );
+  }
+
+  // Scroll reveal + stagger — telemetry cells (pop-in cascade)
+  gsap.fromTo(
+    ".telem-cell",
+    { y: 36, opacity: 0, scale: 0.97 },
+    {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 0.65,
+      stagger: 0.09,
+      ease: "power3.out",
+      clearProps: "transform",
+      scrollTrigger: {
+        trigger: "#telemetry-grid",
+        start: "top 78%",
+        once: true,
+      },
+      onComplete: () => {
+        initTelemHoverTilt();
+      },
+    },
+  );
+
+  // Section titles — slide in from left
+  gsap.utils.toArray(".telemetry-head h2, .raycast-head h2, .stack-pin h2, .rare-folder-copy h2, .manifest-copy h2").forEach((title) => {
+    gsap.from(title, {
+      x: -28,
+      opacity: 0,
+      duration: 0.7,
+      ease: "power3.out",
+      clearProps: "transform",
+      scrollTrigger: { trigger: title, start: "top 85%", once: true },
+    });
+  });
+
+  // Scroll pinning + card stacking
+  const pin = document.querySelector(".stack-pin");
+  const cards = gsap.utils.toArray(".stack-card");
+
+  if (pin && window.matchMedia("(min-width: 961px)").matches) {
+    ScrollTrigger.create({
+      trigger: ".stack-layout",
+      start: "top 12%",
+      end: "bottom 75%",
+      pin: pin,
+      pinSpacing: true,
+    });
+  }
+
+  cards.forEach((card, index) => {
+    gsap.fromTo(
+      card,
+      { y: 90 + index * 24, opacity: 0.12, scale: 0.94 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 88%",
+          end: "top 42%",
+          scrub: true,
+        },
+      }
+    );
+  });
+
+  // Accordion — slide in + stagger
+  gsap.from(".accordion-item", {
+    x: 28,
+    opacity: 0,
+    stagger: 0.14,
+    duration: 0.6,
+    ease: "power2.out",
+    clearProps: "transform",
+    scrollTrigger: {
+      trigger: "#accordion",
+      start: "top 80%",
+      once: true,
+    },
+  });
+
+  // Dossier — scroll reveal
+  gsap.from(".rare-folder-copy > *", {
+    y: 24,
+    opacity: 0,
+    stagger: 0.1,
+    duration: 0.55,
+    ease: "power2.out",
+    clearProps: "transform",
+    scrollTrigger: { trigger: "#dossier", start: "top 75%", once: true },
+  });
+
+  gsap.from("#rare-folder-root", {
+    scale: 0.92,
+    opacity: 0,
+    duration: 0.65,
+    ease: "power3.out",
+    clearProps: "transform",
+    scrollTrigger: { trigger: "#rare-folder-root", start: "top 80%", once: true },
+  });
+
+  // Manifest links — stagger cascade
+  gsap.from(".manifest-links a", {
+    x: 20,
+    opacity: 0,
+    stagger: 0.1,
+    duration: 0.45,
+    ease: "power2.out",
+    clearProps: "transform",
+    scrollTrigger: { trigger: ".manifest-grid", start: "top 80%", once: true },
+  });
+
+  // CTA — slide in
+  gsap.from(".cta-kicker", {
+    x: -16,
+    opacity: 0,
+    duration: 0.4,
+    clearProps: "transform",
+    scrollTrigger: { trigger: ".cta-band", start: "top 72%", once: true },
+  });
+  gsap.from(".cta-title", {
+    x: -48,
+    opacity: 0,
+    duration: 0.75,
+    ease: "power3.out",
+    clearProps: "transform",
+    scrollTrigger: { trigger: ".cta-band", start: "top 70%", once: true },
+  });
+  gsap.from(".cta-actions .micro-btn", {
+    y: 20,
+    opacity: 0,
+    scale: 0.96,
+    stagger: 0.12,
+    duration: 0.5,
+    ease: "power3.out",
+    clearProps: "transform",
+    scrollTrigger: { trigger: ".cta-actions", start: "top 85%", once: true },
+  });
+
+  // Number ticker — stats count up on enter
+  animateStatTickers();
+}
+
+function animateStatTickers() {
+  const nodes = [
+    document.getElementById("stat-apps"),
+    document.getElementById("stat-plugins"),
+  ].filter(Boolean);
+
+  nodes.forEach((el) => {
+    const target = parseInt(el.textContent, 10);
+    if (Number.isNaN(target)) return;
+    el.textContent = "00";
+
+    ScrollTrigger.create({
+      trigger: el,
+      start: "top 90%",
+      once: true,
+      onEnter: () => {
+        const state = { val: 0 };
+        gsap.to(state, {
+          val: target,
+          duration: 0.9,
+          ease: "power2.out",
+          onUpdate: () => {
+            el.textContent = String(Math.round(state.val)).padStart(2, "0");
+          },
+        });
+      },
+    });
+  });
+}
+
+function initRippleFeedback() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  document.addEventListener(
+    "pointerdown",
+    (event) => {
+      const btn = event.target.closest(".micro-btn");
+      if (!btn) return;
+
+      const rect = btn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const ripple = document.createElement("span");
+      ripple.className = "micro-ripple";
+      ripple.style.width = `${size}px`;
+      ripple.style.height = `${size}px`;
+      ripple.style.left = `${event.clientX - rect.left - size / 2}px`;
+      ripple.style.top = `${event.clientY - rect.top - size / 2}px`;
+      btn.appendChild(ripple);
+      ripple.addEventListener("animationend", () => ripple.remove());
+    },
+    { passive: true }
+  );
+}
+
+function initTelemHoverTilt() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  if (typeof gsap === "undefined") return;
+  if (initTelemHoverTilt.bound) return;
+  initTelemHoverTilt.bound = true;
+
+  document.querySelectorAll(".telem-cell").forEach((cell) => {
+    cell.addEventListener("pointermove", (event) => {
+      const rect = cell.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      gsap.to(cell, {
+        rotateX: y * -4,
+        rotateY: x * 5,
+        transformPerspective: 800,
+        duration: 0.35,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
+    });
+    cell.addEventListener("pointerleave", () => {
+      gsap.to(cell, {
+        rotateX: 0,
+        rotateY: 0,
+        duration: 0.45,
+        ease: "power3.out",
+        overwrite: "auto",
+        onComplete: () => gsap.set(cell, { clearProps: "transform" }),
+      });
+    });
+  });
+}
+
+renderTelemetry();
+renderStackCards();
+renderAccordion();
+renderCtaActions();
+initMotion();
+initRippleFeedback();
+if (typeof initMicroTransitions === "function") {
+  initMicroTransitions();
+}
+if (typeof mountRareFolder === "function") {
+  mountRareFolder(document.getElementById("rare-folder-root"));
+}
+if (typeof mountRareScrollProgress === "function") {
+  mountRareScrollProgress();
+}

@@ -1,0 +1,334 @@
+/* Rare UI — Folder (vanilla port) + Scroll Progress
+   Adapted from https://github.com/swamimalode07/rare-ui */
+
+/* —— Folder —— */
+.rare-folder-section {
+  border-bottom: 2px solid var(--line);
+  padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 3vw, 2rem);
+  background: var(--paper-2);
+}
+
+.rare-folder-section .section-rule {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.rare-folder-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.rare-folder-copy h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  margin-bottom: 1rem;
+}
+
+.rare-folder-copy p {
+  text-transform: none;
+  color: var(--ink-soft);
+  max-width: 36rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.rare-folder-hint {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--hazard);
+  margin-bottom: 0.75rem;
+}
+
+.rare-folder {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.rare-folder__stage {
+  position: relative;
+  width: 321px;
+  height: 270px;
+  perspective: 800px;
+  cursor: pointer;
+}
+
+.rare-folder__back {
+  position: absolute;
+  inset: 0;
+  border-radius: 25px;
+  background: var(--ink);
+  box-shadow: inset 0 0 6px 2px color-mix(in srgb, var(--paper) 22%, transparent);
+}
+
+.rare-folder__cards {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.rare-folder__card {
+  position: absolute;
+  width: 164px;
+  height: 214px;
+  pointer-events: auto;
+  will-change: transform;
+  transform: translate3d(40px, -10px, 0) rotate(10deg);
+}
+
+.rare-folder__card[data-slot="2"] {
+  transform: translate3d(3px, -20px, 0) rotate(2deg);
+  z-index: 2;
+}
+
+.rare-folder__card[data-slot="3"] {
+  transform: translate3d(-40px, -22px, 0) rotate(-5deg);
+  z-index: 1;
+}
+
+.rare-folder__card[data-slot="1"] {
+  z-index: 3;
+}
+
+.rare-folder__card-face {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: #f4f4f5;
+  border: 1px solid #d4d4d8;
+  box-shadow: inset 3px 5px 6px color-mix(in srgb, var(--ink) 8%, transparent);
+  overflow: hidden;
+}
+
+.rare-folder__card-lines {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 31px;
+  display: grid;
+  gap: 8px;
+}
+
+.rare-folder__card-lines span {
+  display: block;
+  height: 6px;
+  border-radius: 999px;
+  background: #d4d4d8;
+}
+
+.rare-folder__card-lines span:first-child {
+  height: 12px;
+  margin-bottom: 6px;
+}
+
+.rare-folder__card-lines span.is-half {
+  width: 48%;
+  display: inline-block;
+}
+
+.rare-folder__card-meta {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.rare-folder__card.is-resume .rare-folder__card-face {
+  background: #fafafa;
+  border-color: #a1a1aa;
+}
+
+.rare-folder__card.is-resume .rare-folder__card-meta {
+  color: var(--hazard);
+  font-weight: 700;
+}
+
+.rare-folder__card.is-resume {
+  cursor: pointer;
+}
+
+.rare-folder__flap {
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 321px;
+  height: 241px;
+  transform-origin: bottom center;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform: rotateX(-15deg);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.rare-folder__flap-blur {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  clip-path: path(
+    "M0 25C0 11.1929 11.1929 0 25 0H136.084C143.044 0 149.689 2.90139 154.42 8.00608L178.08 33.5343C182.811 38.639 189.456 41.5404 196.416 41.5404H296C309.807 41.5404 321 52.7333 321 66.5404V216C321 229.807 309.807 241 296 241H25C11.1929 241 0 229.807 0 216V25Z"
+  );
+}
+
+.rare-folder__flap svg {
+  position: absolute;
+  inset: 0;
+  width: 321px;
+  height: 241px;
+}
+
+.rare-folder-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .rare-folder-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .rare-folder__stage {
+    transform: scale(0.82);
+    transform-origin: center;
+  }
+}
+
+/* —— Scroll Progress —— */
+.rare-scroll {
+  position: fixed;
+  right: 1rem;
+  bottom: 1.25rem;
+  z-index: 55;
+  font-family: var(--font-mono);
+}
+
+.rare-scroll__pill {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 2.5rem;
+  padding: 0.45rem 0.7rem;
+  border: 2px solid var(--line);
+  background: var(--paper);
+  cursor: pointer;
+  box-shadow: 4px 4px 0 color-mix(in srgb, var(--ink) 8%, transparent);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.rare-scroll__pill:hover,
+.rare-scroll.is-open .rare-scroll__pill {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.rare-scroll__ring {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.rare-scroll__ring circle {
+  fill: none;
+  stroke-width: 2.5;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.rare-scroll__ring .track {
+  stroke: currentColor;
+  opacity: 0.25;
+}
+
+.rare-scroll__ring .bar {
+  stroke: var(--hazard);
+  stroke-dasharray: 62.83;
+  stroke-dashoffset: 62.83;
+  transition: stroke-dashoffset 0.15s linear;
+}
+
+.rare-scroll.is-open .rare-scroll__ring .bar {
+  stroke: color-mix(in srgb, var(--hazard) 72%, white);
+}
+
+.rare-scroll__label {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  max-width: 9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rare-scroll__menu {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 0.5rem);
+  min-width: 12rem;
+  border: 2px solid var(--line);
+  background: var(--paper);
+  display: none;
+  flex-direction: column;
+}
+
+.rare-scroll.is-open .rare-scroll__menu {
+  display: flex;
+}
+
+.rare-scroll__menu a {
+  padding: 0.7rem 0.85rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.rare-scroll__menu a:last-child {
+  border-bottom: 0;
+}
+
+.rare-scroll__menu a:hover,
+.rare-scroll__menu a.is-active {
+  background: var(--hazard);
+  color: var(--hazard-ink);
+}
+
+@media (max-width: 720px) {
+  .rare-scroll {
+    right: 0.65rem;
+    bottom: 0.85rem;
+  }
+
+  .rare-scroll__label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rare-folder__card,
+  .rare-folder__flap {
+    transition: none !important;
+  }
+}

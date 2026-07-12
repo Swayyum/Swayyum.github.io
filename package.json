@@ -1,12 +1,14 @@
 {
-  "name": "swayyum-portfolio",
-  "version": "1.0.0",
-  "description": "Portfolio website with Three.js 3D effects",
+  "name": "swayyum-site",
+  "version": "2.0.0",
+  "description": "Swayam Mehta product landing — Fluxon, Typatro, and Raycast plugins",
   "main": "index.html",
   "scripts": {
     "dev": "npx http-server -p 8000 -o",
     "start": "npm run dev",
     "build": "node build.js",
+    "test": "playwright test",
+    "test:animations": "playwright test tests/animations.spec.js",
     "deploy": "git add . && git commit -m \"Update portfolio site\" && git push origin main",
     "deploy:msg": "bash deploy.sh"
   },
@@ -16,13 +18,14 @@
     "webgl",
     "github-pages"
   ],
-  "author": "Swayyum",
+  "author": "Swayam Mehta",
   "license": "MIT",
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "@playwright/test": "^1.61.1",
+    "http-server": "^14.1.1",
+    "playwright": "^1.61.1"
   },
   "dependencies": {
     "ogl": "^1.0.11"
   }
 }
-
