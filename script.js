@@ -19,14 +19,43 @@ if (menuToggle && mobileNav) {
     const open = mobileNav.classList.toggle("is-open");
     mobileNav.hidden = !open;
     menuToggle.setAttribute("aria-expanded", String(open));
+    menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
   });
   mobileNav.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => {
       mobileNav.classList.remove("is-open");
       mobileNav.hidden = true;
       menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "Open menu");
     });
   });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || mobileNav.hidden) return;
+    mobileNav.classList.remove("is-open");
+    mobileNav.hidden = true;
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Open menu");
+    menuToggle.focus();
+  });
+}
+
+const navLinks = [...document.querySelectorAll('.site-nav a[href^="#"]')];
+if ("IntersectionObserver" in window && navLinks.length) {
+  const sections = navLinks.map((link) => document.querySelector(link.hash)).filter(Boolean);
+  const navObserver = new IntersectionObserver(
+    (entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      navLinks.forEach((link) => {
+        const active = link.hash === `#${visible.target.id}`;
+        link.classList.toggle("is-active", active);
+        if (active) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    },
+    { rootMargin: "-20% 0px -65%", threshold: [0, 0.2, 0.5] }
+  );
+  sections.forEach((section) => navObserver.observe(section));
 }
 
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -216,7 +245,7 @@ function renderAccordion() {
   mount.innerHTML = plugins
     .map(
       (plugin, index) => `
-      <article class="accordion-item${index === 0 ? " is-open" : ""}" tabindex="0">
+      <article class="accordion-item${index === 0 ? " is-open" : ""}" tabindex="0" role="button" aria-expanded="${index === 0 ? "true" : "false"}">
         <div>
           <p class="accordion-meta">[ SLOT / ${String(index + 1).padStart(2, "0")} ] // ${plugin.platform}</p>
           <h3>${plugin.name}</h3>
@@ -232,11 +261,22 @@ function renderAccordion() {
   const items = [...mount.querySelectorAll(".accordion-item")];
   items.forEach((item) => {
     const activate = () => {
-      items.forEach((el) => el.classList.remove("is-open"));
+      items.forEach((el) => {
+        el.classList.remove("is-open");
+        el.setAttribute("aria-expanded", "false");
+      });
       item.classList.add("is-open");
+      item.setAttribute("aria-expanded", "true");
     };
     item.addEventListener("mouseenter", activate);
     item.addEventListener("focus", activate);
+    item.addEventListener("click", activate);
+    item.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        activate();
+      }
+    });
   });
 }
 
