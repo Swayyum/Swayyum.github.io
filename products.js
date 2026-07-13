@@ -7,9 +7,9 @@ const PRODUCTS = [
     featured: true,
     status: "shipped",
     platform: "macOS 14+",
-    tagline: "Native system monitor with live metrics and a WizTree-style Disk Explorer.",
+    tagline: "Production-grade system observability with live metrics and a visual Disk Explorer.",
     description:
-      "CPU, memory, network, disks, processes, history, and a menu bar companion. Free for personal use.",
+      "A native macOS product that turns low-level CPU, memory, network, disk, and process telemetry into an operator-friendly interface.",
     image:
       "https://raw.githubusercontent.com/Swayyum/fluxon-releases/main/docs/media/hero.png",
     imageAlt: "Fluxon System Overview dashboard",
@@ -33,9 +33,9 @@ const PRODUCTS = [
     featured: true,
     status: "shipped",
     platform: "Terminal · Python",
-    tagline: "A slot-machine typing roguelike for your terminal.",
+    tagline: "A Python terminal product built around a complete game loop and responsive TUI.",
     description:
-      "Stack Chips × Mult, beat Blinds, collect Jokers, and climb endless Antes in a casino-felt TUI.",
+      "A shipped Python package combining stateful game systems, scoring logic, progression, and a polished terminal interface.",
     image:
       "https://raw.githubusercontent.com/Swayyum/Typatro/main/docs/images/hero.png",
     imageAlt: "Typatro run mode with blind sidebar and live score",
@@ -59,9 +59,9 @@ const PRODUCTS = [
     featured: true,
     status: "shipped",
     platform: "macOS 14+",
-    tagline: "Readiness, sleep, and activity from the menu bar.",
+    tagline: "A secure Oura API integration that turns health data into timely actions.",
     description:
-      "Native SwiftUI menu bar app synced to the Oura API, with score details, a full Dashboard, and quiet move reminders. Tokens stay in Keychain; metrics stay on your Mac.",
+      "A native SwiftUI client integrating OAuth-protected Oura data, local Keychain storage, score dashboards, and context-aware reminders.",
     image: "assets/oura-menu-bar-hero.jpg",
     imageAlt: "Oura Menu Bar showing recovery scores and move reminders in the macOS menu bar",
     accent: "#1d4ed8",
@@ -84,9 +84,9 @@ const PRODUCTS = [
     featured: false,
     status: "shipped",
     platform: "Raycast",
-    tagline: "Scan your local network and find free IP addresses.",
+    tagline: "Local-network discovery and conflict avoidance inside a command workflow.",
     description:
-      "Detect assigned IPs and get smart recommendations to avoid conflicts on your LAN.",
+      "Scans a live LAN, identifies assigned addresses, and turns network state into clear recommendations for the user.",
     image: null,
     imageAlt: null,
     accent: "#1d4ed8",
@@ -109,9 +109,9 @@ const PRODUCTS = [
     featured: false,
     status: "shipped",
     platform: "Raycast",
-    tagline: "Read and search verses from the Bhagavad Gita.",
+    tagline: "Searchable knowledge access with optional AI-assisted exploration.",
     description:
-      "Browse and search quotes from Raycast. Optional AI features when Raycast AI is available.",
+      "A focused retrieval interface for browsing and searching verses, with AI-assisted features when Raycast AI is available.",
     image: null,
     imageAlt: null,
     accent: "#1d4ed8",

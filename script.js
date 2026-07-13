@@ -121,21 +121,21 @@ function renderCtaActions() {
 
   mount.innerHTML = [
     createMicroButton({
-      href: "https://github.com/Swayyum/fluxon-releases/releases",
-      label: "Download Fluxon",
+      href: "assets/Swayam_Mehta_Resume.pdf",
+      label: "Open Résumé",
       micro: "morph",
       icon: "download",
       icon2: "check",
       variant: "primary",
       size: "xl",
       targetBlank: true,
-      doneLabel: "Fetched",
+      doneLabel: "Opened",
     }),
     createMicroButton({
-      href: "https://pypi.org/project/typatro/",
-      label: "Install Typatro",
+      href: "https://linkedin.com/in/swayam-mehta",
+      label: "Connect on LinkedIn",
       micro: "slide-arrow",
-      icon: "terminal",
+      icon: "external",
       icon2: "arrow",
       variant: "ghost",
       size: "xl",
