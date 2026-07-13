@@ -56,6 +56,8 @@ function createMicroButton(opts) {
     .filter(Boolean)
     .join(" ");
 
+  const isMailto = typeof href === "string" && href.startsWith("mailto:");
+  const openBlank = targetBlank && !isMailto;
   const second = icon2 || (micro === "slide-arrow" ? "arrow" : icon);
   const needsSecond = ["slide-arrow", "sparkle", "morph", "color-morph", "ring"].includes(micro);
   const sparkleBits =
@@ -77,7 +79,7 @@ function createMicroButton(opts) {
     `data-micro="${micro}"`,
     doneLabel ? `data-done-label="${doneLabel}"` : "",
     href ? `href="${href}"` : "",
-    targetBlank ? `target="_blank" rel="noopener noreferrer"` : "",
+    openBlank ? `target="_blank" rel="noopener noreferrer"` : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -130,11 +132,34 @@ function bindMorphDone(root = document) {
   });
 }
 
+function openMailto(href) {
+  window.location.assign(href);
+}
+
+function initMailtoLinks(root = document) {
+  root.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
+    link.removeAttribute("target");
+    link.removeAttribute("rel");
+    if (link.dataset.mailtoBound) return;
+    link.dataset.mailtoBound = "1";
+
+    link.addEventListener("click", (event) => {
+      const href = link.getAttribute("href");
+      if (!href?.startsWith("mailto:")) return;
+      event.preventDefault();
+      openMailto(href);
+    });
+  });
+}
+
 function initMicroTransitions(root = document) {
   enhanceMagneticButtons(root);
   bindMorphDone(root);
+  initMailtoLinks(root);
 }
 
 window.createMicroButton = createMicroButton;
 window.initMicroTransitions = initMicroTransitions;
+window.initMailtoLinks = initMailtoLinks;
+window.openMailto = openMailto;
 window.MICRO_ICONS = MICRO_ICONS;

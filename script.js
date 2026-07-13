@@ -108,7 +108,7 @@ function linkButtons(links, sizeClass = "sm") {
         icon2,
         variant: link.primary ? "primary" : "ghost",
         size: sizeClass,
-        targetBlank: true,
+        targetBlank: !String(link.href || "").startsWith("mailto:"),
         doneLabel: label.includes("download") || label.includes("install") ? "Ready" : undefined,
       });
     })

@@ -247,3 +247,41 @@ test.describe("scroll reveal animations", () => {
     expect(stuck).toEqual([]);
   });
 });
+
+test.describe("mailto contact links", () => {
+  test("hero and contact email links use swayamehta1@gmail.com and explicit navigation", async ({
+    page,
+  }) => {
+    await page.goto(BASE, { waitUntil: "networkidle" });
+
+    const links = await page.evaluate(() =>
+      [...document.querySelectorAll('a[href^="mailto:"]')].map((el) => ({
+        href: el.getAttribute("href"),
+        target: el.getAttribute("target"),
+        bound: el.dataset.mailtoBound === "1",
+      }))
+    );
+
+    expect(links.length).toBeGreaterThanOrEqual(2);
+    for (const link of links) {
+      expect(link.href).toBe("mailto:swayamehta1@gmail.com");
+      expect(link.target).toBeNull();
+      expect(link.bound).toBe(true);
+    }
+
+    const assignCalls = [];
+    await page.exposeFunction("recordMailtoAssign", (url) => assignCalls.push(url));
+    await page.evaluate(() => {
+      window.openMailto = (url) => window.recordMailtoAssign(url);
+    });
+
+    await page.locator('.hero-links a[href^="mailto:"]').click();
+    expect(assignCalls).toContain("mailto:swayamehta1@gmail.com");
+
+    assignCalls.length = 0;
+    await page.locator("#contact").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
+    await page.locator('#cta-actions a[href^="mailto:"]').click();
+    expect(assignCalls).toContain("mailto:swayamehta1@gmail.com");
+  });
+});
