@@ -1,7 +1,7 @@
 {
   "name": "swayyum-site",
   "version": "2.0.0",
-  "description": "Swayam Mehta product landing — Fluxon, Typatro, and Raycast plugins",
+  "description": "Swayam Mehta product landing — Fluxon, Typatro, Oura Menu Bar, and Raycast plugins",
   "main": "index.html",
   "scripts": {
     "dev": "npx http-server -p 8000 -o",

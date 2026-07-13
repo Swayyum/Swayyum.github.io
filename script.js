@@ -153,34 +153,52 @@ function renderTelemetry() {
 
   const appCells = apps
     .map(
-      (app, index) => `
-      <article class="telem-cell is-app">
-        <div>
-          <div class="telem-top">
-            <span>[ UNIT / ${String(index + 1).padStart(2, "0")} ]</span>
-            <span class="telem-status">${app.status}</span>
+      (app) => {
+        const stageHref = `#stage-${app.id}`;
+        const media = app.image
+          ? `<a class="telem-media" href="${stageHref}">
+              <img src="${app.image}" alt="${app.imageAlt || app.name}" loading="lazy" width="960" height="600">
+              <div class="halftone" aria-hidden="true"></div>
+            </a>`
+          : `<div class="telem-media is-empty" aria-hidden="true"></div>`;
+
+        return `
+      <article class="telem-cell is-app${app.image ? " has-media" : ""}">
+        ${media}
+        <div class="telem-body">
+          <div>
+            <div class="telem-top">
+              <span>${app.platform}</span>
+              <span class="telem-status">${app.status}</span>
+            </div>
+            <h3 class="telem-name"><a href="${stageHref}">${app.name}</a></h3>
+            <p class="telem-tag">${app.tagline}</p>
           </div>
-          <h3 class="telem-name">${app.name}</h3>
-          <p class="telem-tag">${app.tagline}</p>
+          <div class="telem-actions">
+            <a class="btn btn-ghost btn-sm" href="${stageHref}">View stage</a>
+            ${linkButtons(app.links)}
+          </div>
         </div>
-        <div class="telem-actions">${linkButtons(app.links)}</div>
-      </article>`
+      </article>`;
+      }
     )
     .join("");
 
   const pluginCells = plugins
     .map(
-      (plugin, index) => `
+      (plugin) => `
       <article class="telem-cell is-plugin">
-        <div>
-          <div class="telem-top">
-            <span>[ EXT / ${String(index + 1).padStart(2, "0")} ]</span>
-            <span class="telem-status">${plugin.platform}</span>
+        <div class="telem-body">
+          <div>
+            <div class="telem-top">
+              <span>RAYCAST</span>
+              <span class="telem-status">${plugin.status}</span>
+            </div>
+            <h3 class="telem-name">${plugin.name}</h3>
+            <p class="telem-tag">${plugin.tagline}</p>
           </div>
-          <h3 class="telem-name">${plugin.name}</h3>
-          <p class="telem-tag">${plugin.tagline}</p>
+          <div class="telem-actions">${linkButtons(plugin.links)}</div>
         </div>
-        <div class="telem-actions">${linkButtons(plugin.links)}</div>
       </article>`
     )
     .join("");
@@ -189,13 +207,15 @@ function renderTelemetry() {
     typeof UPCOMING !== "undefined" && UPCOMING.length
       ? `
     <article class="telem-cell is-wide">
-      <div>
-        <div class="telem-top">
-          <span>[ BAY / NEXT ]</span>
-          <span class="telem-status">STANDBY</span>
+      <div class="telem-body">
+        <div>
+          <div class="telem-top">
+            <span>COMING SOON</span>
+            <span class="telem-status">OPEN</span>
+          </div>
+          <h3 class="telem-name">${UPCOMING[0].name}</h3>
+          <p class="telem-tag">${UPCOMING[0].tagline}</p>
         </div>
-        <h3 class="telem-name">${UPCOMING[0].name}</h3>
-        <p class="telem-tag">${UPCOMING[0].tagline}</p>
       </div>
     </article>`
       : "";
@@ -208,17 +228,34 @@ function renderTelemetry() {
   if (pluginStat) pluginStat.textContent = String(plugins.length).padStart(2, "0");
 }
 
+function renderStageJump(featured) {
+  const mount = document.getElementById("stage-jump");
+  if (!mount) return;
+
+  mount.innerHTML = featured
+    .map(
+      (app) => `
+      <a class="stage-jump-link" href="#stage-${app.id}">
+        <span class="stage-jump-name">${app.name}</span>
+        <span class="stage-jump-meta">${app.platform}</span>
+      </a>`
+    )
+    .join("");
+}
+
 function renderStackCards() {
   const mount = document.getElementById("stack-cards");
   if (!mount || typeof PRODUCTS === "undefined") return;
 
   const featured = PRODUCTS.filter((p) => p.kind === "app" && p.image);
+  renderStageJump(featured);
+
   mount.innerHTML = featured
     .map(
-      (app) => `
-      <article class="stack-card">
-        <div class="stack-card-media">
-          <img src="${app.image}" alt="${app.imageAlt || app.name}" loading="lazy" width="1200" height="750">
+      (app, index) => `
+      <article class="stack-card" id="stage-${app.id}">
+        <div class="stack-card-media media-scale">
+          <img src="${app.image}" alt="${app.imageAlt || app.name}" loading="${index === 0 ? "eager" : "lazy"}" width="1440" height="900">
           <div class="halftone" aria-hidden="true"></div>
         </div>
         <div class="stack-card-body">
@@ -228,6 +265,7 @@ function renderStackCards() {
               <span class="telem-status">${app.status}</span>
             </div>
             <h3>${app.name}</h3>
+            <p class="stack-tagline">${app.tagline}</p>
             <p>${app.description}</p>
           </div>
           <div class="telem-actions">${linkButtons(app.links)}</div>
@@ -247,7 +285,7 @@ function renderAccordion() {
       (plugin, index) => `
       <article class="accordion-item${index === 0 ? " is-open" : ""}" tabindex="0" role="button" aria-expanded="${index === 0 ? "true" : "false"}">
         <div>
-          <p class="accordion-meta">[ SLOT / ${String(index + 1).padStart(2, "0")} ] // ${plugin.platform}</p>
+          <p class="accordion-meta">${plugin.platform}</p>
           <h3>${plugin.name}</h3>
         </div>
         <div class="accordion-body">
@@ -445,6 +483,37 @@ function initMotion() {
       scrollTrigger: { trigger: title, start: "top 85%", once: true },
     });
   });
+
+  // Catalog media — settle into place on scroll
+  gsap.utils.toArray(".telem-media img").forEach((img) => {
+    gsap.from(img, {
+      scale: 1.06,
+      opacity: 0.4,
+      duration: 0.8,
+      ease: "power3.out",
+      clearProps: "transform",
+      scrollTrigger: { trigger: img, start: "top 88%", once: true },
+    });
+  });
+
+  // Active stage jump link while scrolling stages
+  const stageCards = gsap.utils.toArray(".stack-card[id]");
+  const jumpLinks = [...document.querySelectorAll(".stage-jump-link")];
+  if (stageCards.length && jumpLinks.length && "IntersectionObserver" in window) {
+    const stageObserver = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        jumpLinks.forEach((link) => {
+          link.classList.toggle("is-active", link.getAttribute("href") === `#${visible.target.id}`);
+        });
+      },
+      { rootMargin: "-30% 0px -45%", threshold: [0.2, 0.5] }
+    );
+    stageCards.forEach((card) => stageObserver.observe(card));
+  }
 
   // Scroll pinning + card stacking
   const pin = document.querySelector(".stack-pin");

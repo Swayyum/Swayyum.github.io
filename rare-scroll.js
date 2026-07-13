@@ -4,7 +4,7 @@
 const SCROLL_SECTIONS = [
   { id: "top", label: "Intro" },
   { id: "units", label: "Units" },
-  { id: "stack", label: "Payload" },
+  { id: "stack", label: "Stack" },
   { id: "dossier", label: "Dossier" },
   { id: "raycast", label: "Raycast" },
   { id: "manifest", label: "Manifest" },

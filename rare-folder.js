@@ -30,7 +30,7 @@ function cardLinesMarkup(isResume) {
     return `<div style="display:flex;gap:6px"><span class="is-half"></span><span class="is-half"></span></div>`;
   }).join("");
   return `<div class="rare-folder__card-lines">${rows}</div>
-    <div class="rare-folder__card-meta">${isResume ? "RESUME.PDF // OPEN" : "DOC / ARCHIVE"}</div>`;
+    <div class="rare-folder__card-meta">${isResume ? "RESUME.PDF // OPEN" : "FIELD / LOG"}</div>`;
 }
 
 function mountRareFolder(root) {

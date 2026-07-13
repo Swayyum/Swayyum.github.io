@@ -91,9 +91,12 @@ p,
 .hero-line,
 .scrub-text,
 .pin-copy,
+.stack-tagline,
+.stack-card-body p,
 .manifest-copy p,
 .product-desc,
-.accordion-body p {
+.accordion-body p,
+.telem-tag {
   text-transform: none;
   letter-spacing: 0;
 }
@@ -488,7 +491,7 @@ p,
   line-height: 1.6;
 }
 
-/* Dense telemetry grid — 12 col, 1px gutters */
+/* Dense telemetry grid — visual catalog shelf */
 .telemetry-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -500,12 +503,9 @@ p,
 
 .telem-cell {
   background: var(--paper);
-  padding: 1.25rem;
   min-height: 11rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 1rem;
   transition: background 0.25s ease;
 }
 
@@ -513,17 +513,68 @@ p,
   background: var(--paper-2);
 }
 
+.telem-cell.has-media {
+  padding: 0;
+}
+
+.telem-cell:not(.has-media) {
+  padding: 1.25rem;
+}
+
+.telem-media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--ink);
+  aspect-ratio: 16 / 10;
+  border-bottom: 2px solid var(--line);
+}
+
+.telem-media.is-empty {
+  min-height: 0;
+  aspect-ratio: auto;
+  border: 0;
+}
+
+.telem-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.7s var(--ease);
+}
+
+.telem-cell:hover .telem-media img {
+  transform: scale(1.04);
+}
+
+.telem-body {
+  padding: 1.15rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  flex: 1;
+}
+
+.telem-cell:not(.has-media) .telem-body {
+  padding: 0;
+  height: 100%;
+}
+
 .telem-cell.is-app {
-  grid-column: span 6;
-  min-height: 16rem;
+  grid-column: span 4;
+  min-height: 0;
 }
 
 .telem-cell.is-plugin {
   grid-column: span 6;
+  min-height: 12rem;
 }
 
 .telem-cell.is-wide {
   grid-column: span 12;
+  min-height: 8rem;
 }
 
 .telem-top {
@@ -540,17 +591,26 @@ p,
 
 .telem-name {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-size: clamp(1.45rem, 2.6vw, 2rem);
   letter-spacing: -0.03em;
   line-height: 0.95;
   margin: 0.5rem 0;
 }
 
+.telem-name a {
+  display: inline;
+}
+
+.telem-name a:hover {
+  color: var(--hazard);
+}
+
 .telem-tag {
   text-transform: none;
   color: var(--ink-soft);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   max-width: 34rem;
+  line-height: 1.45;
 }
 
 .telem-actions {
@@ -559,7 +619,7 @@ p,
   gap: 0.5rem;
 }
 
-/* Pinned stack */
+/* Pinned stack / product stages */
 .stack-section {
   background: var(--paper-2);
   padding-top: clamp(3rem, 8vw, 6rem);
@@ -568,7 +628,7 @@ p,
 
 .stack-layout {
   display: grid;
-  grid-template-columns: minmax(240px, 0.85fr) minmax(0, 1.4fr);
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.55fr);
   gap: clamp(1.5rem, 4vw, 3rem);
   align-items: start;
 }
@@ -584,8 +644,49 @@ p,
   margin-bottom: 0.85rem;
 }
 
+.stage-jump {
+  margin-top: 1.75rem;
+  display: grid;
+  gap: 2px;
+  background: var(--line);
+  border: 2px solid var(--line);
+}
+
+.stage-jump-link {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.85rem 0.95rem;
+  background: var(--paper);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.stage-jump-link:hover,
+.stage-jump-link.is-active {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.stage-jump-link.is-active .stage-jump-meta,
+.stage-jump-link:hover .stage-jump-meta {
+  color: color-mix(in srgb, var(--paper) 70%, transparent);
+}
+
+.stage-jump-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.stage-jump-meta {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
 .pin-stats {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   display: grid;
   gap: 2px;
   background: var(--line);
@@ -614,23 +715,26 @@ p,
 
 .stack-cards {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.75rem;
 }
 
 .stack-card {
   border: 2px solid var(--line);
   background: var(--paper);
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-columns: 1fr;
   overflow: hidden;
   will-change: transform, opacity;
+  scroll-margin-top: calc(var(--header-h) + 1rem);
 }
 
 .stack-card-media {
   position: relative;
   overflow: hidden;
   background: var(--ink);
-  min-height: 220px;
+  min-height: clamp(220px, 38vw, 420px);
+  aspect-ratio: 16 / 10;
+  border-bottom: 2px solid var(--line);
 }
 
 .stack-card-media img {
@@ -642,29 +746,48 @@ p,
 }
 
 .stack-card:hover .stack-card-media img {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .stack-card-body {
-  padding: 1.25rem 1.35rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 1rem;
-  border-left: 2px solid var(--line);
+  padding: clamp(1.25rem, 3vw, 1.85rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) auto;
+  gap: 1.25rem 2rem;
+  align-items: end;
+}
+
+.stack-card-body > div:first-child {
+  min-width: 0;
 }
 
 .stack-card-body h3 {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  letter-spacing: -0.03em;
-  line-height: 0.95;
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  margin: 0.45rem 0 0.65rem;
+}
+
+.stack-tagline {
+  font-size: 1.05rem;
+  color: var(--ink);
+  font-weight: 500;
+  margin-bottom: 0.55rem;
+  max-width: 40rem;
 }
 
 .stack-card-body p {
   text-transform: none;
   color: var(--ink-soft);
   font-size: 0.92rem;
+  max-width: 42rem;
+  line-height: 1.55;
+}
+
+.stack-card-body .telem-actions {
+  justify-content: flex-end;
+  align-self: end;
 }
 
 /* Accordion */
@@ -858,19 +981,28 @@ p,
   .telemetry-head,
   .raycast-head,
   .stack-layout,
-  .manifest-grid,
-  .stack-card {
+  .manifest-grid {
     grid-template-columns: 1fr;
   }
 
   .stack-card-body {
-    border-left: 0;
-    border-top: 2px solid var(--line);
+    grid-template-columns: 1fr;
   }
 
-  .telem-cell.is-app,
+  .stack-card-body .telem-actions {
+    justify-content: flex-start;
+  }
+
+  .telem-cell.is-app {
+    grid-column: span 6;
+  }
+
   .telem-cell.is-plugin {
     grid-column: span 12;
+  }
+
+  .stage-jump {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .accordion {
@@ -896,6 +1028,20 @@ p,
 
   .hero-title {
     font-size: clamp(3rem, 14vw, 4.5rem);
+  }
+
+  .telem-cell.is-app,
+  .telem-cell.is-plugin {
+    grid-column: span 12;
+  }
+
+  .stage-jump {
+    grid-template-columns: 1fr;
+  }
+
+  .stack-card-media {
+    min-height: 200px;
+    aspect-ratio: 16 / 11;
   }
 }
 

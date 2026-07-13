@@ -9,7 +9,7 @@ const PRODUCTS = [
     platform: "macOS 14+",
     tagline: "Native system monitor with live metrics and a WizTree-style Disk Explorer.",
     description:
-      "CPU, memory, network, disks, processes, history, and a menu bar companion — free for personal use.",
+      "CPU, memory, network, disks, processes, history, and a menu bar companion. Free for personal use.",
     image:
       "https://raw.githubusercontent.com/Swayyum/fluxon-releases/main/docs/media/hero.png",
     imageAlt: "Fluxon System Overview dashboard",
@@ -49,6 +49,31 @@ const PRODUCTS = [
       {
         label: "GitHub",
         href: "https://github.com/Swayyum/Typatro",
+      },
+    ],
+  },
+  {
+    id: "oura-menu-bar",
+    name: "Oura Menu Bar",
+    kind: "app",
+    featured: true,
+    status: "shipped",
+    platform: "macOS 14+",
+    tagline: "Readiness, sleep, and activity from the menu bar.",
+    description:
+      "Native SwiftUI menu bar app synced to the Oura API, with score details, a full Dashboard, and quiet move reminders. Tokens stay in Keychain; metrics stay on your Mac.",
+    image: "assets/oura-menu-bar-hero.jpg",
+    imageAlt: "Oura Menu Bar showing recovery scores and move reminders in the macOS menu bar",
+    accent: "#1d4ed8",
+    links: [
+      {
+        label: "Download",
+        href: "https://github.com/Swayyum/oura-menu-bar/releases",
+        primary: true,
+      },
+      {
+        label: "GitHub",
+        href: "https://github.com/Swayyum/oura-menu-bar",
       },
     ],
   },
@@ -109,6 +134,6 @@ const UPCOMING = [
   {
     id: "next",
     name: "Next up",
-    tagline: "More apps are on the way. This catalog grows with every release.",
+    tagline: "More apps land here as they ship.",
   },
 ];
