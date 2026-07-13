@@ -255,7 +255,7 @@ function renderStackCards() {
       (app, index) => `
       <article class="stack-card" id="stage-${app.id}">
         <div class="stack-card-media media-scale">
-          <img src="${app.image}" alt="${app.imageAlt || app.name}" loading="${index === 0 ? "eager" : "lazy"}" width="1440" height="900">
+          <img src="${app.image}" alt="${app.imageAlt || app.name}" loading="eager" fetchpriority="${index === 0 ? "high" : "auto"}" width="1440" height="900">
           <div class="halftone" aria-hidden="true"></div>
         </div>
         <div class="stack-card-body">
@@ -273,6 +273,27 @@ function renderStackCards() {
       </article>`
     )
     .join("");
+}
+
+function primeStageMedia() {
+  const stageImages = [...document.querySelectorAll(".stack-card-media img")];
+  if (!stageImages.length) return;
+
+  stageImages.forEach((img) => {
+    img.loading = "eager";
+
+    const refresh = () => {
+      if (typeof ScrollTrigger === "undefined") return;
+      ScrollTrigger.refresh();
+    };
+
+    if (img.complete) {
+      refresh();
+      return;
+    }
+
+    img.addEventListener("load", refresh, { once: true });
+  });
 }
 
 function renderAccordion() {
@@ -323,18 +344,6 @@ function initMotion() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   gsap.registerPlugin(ScrollTrigger);
-
-  // Marquee — linear loop (constant speed by design)
-  const track = document.querySelector(".marquee-track");
-  if (track) {
-    const width = track.scrollWidth / 2;
-    gsap.to(track, {
-      x: -width,
-      duration: 28,
-      ease: "none",
-      repeat: -1,
-    });
-  }
 
   // Hero orchestration — stagger + spring + scale-in
   const heroTl = gsap.timeline({
@@ -563,6 +572,33 @@ function initMotion() {
     },
   });
 
+  // Career — skills / timeline / github
+  gsap.from("#skills-marquees", {
+    y: 24,
+    opacity: 0,
+    duration: 0.55,
+    ease: "power2.out",
+    clearProps: "transform",
+    scrollTrigger: { trigger: "#skills", start: "top 78%", once: true },
+  });
+  gsap.from(".exp-card", {
+    y: 28,
+    opacity: 0,
+    stagger: 0.12,
+    duration: 0.55,
+    ease: "power2.out",
+    clearProps: "transform",
+    scrollTrigger: { trigger: "#experience-timeline", start: "top 80%", once: true },
+  });
+  gsap.from("#github-activity", {
+    y: 20,
+    opacity: 0,
+    duration: 0.55,
+    ease: "power2.out",
+    clearProps: "transform",
+    scrollTrigger: { trigger: "#github-contrib", start: "top 80%", once: true },
+  });
+
   // Dossier — scroll reveal
   gsap.from(".rare-folder-copy > *", {
     y: 24,
@@ -717,6 +753,7 @@ renderTelemetry();
 renderStackCards();
 renderAccordion();
 renderCtaActions();
+primeStageMedia();
 initMotion();
 initRippleFeedback();
 if (typeof initMicroTransitions === "function") {

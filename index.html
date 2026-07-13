@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="career.css">
   <link rel="stylesheet" href="micro-transitions.css">
   <link rel="stylesheet" href="rare-ui.css">
   <link rel="stylesheet" href="motion-polish.css">
@@ -30,6 +31,7 @@
     </a>
     <nav class="site-nav" aria-label="Primary">
       <a href="#units">Work</a>
+      <a href="#career">Career</a>
       <a href="#dossier">About</a>
       <a href="#raycast">Extensions</a>
       <a href="#manifest">Contact</a>
@@ -52,6 +54,7 @@
 
   <nav id="mobile-nav" class="mobile-nav" hidden>
     <a href="#units">Work</a>
+    <a href="#career">Skills &amp; experience</a>
     <a href="#dossier">About &amp; résumé</a>
     <a href="#raycast">Raycast extensions</a>
     <a href="#manifest">Contact</a>
@@ -96,47 +99,19 @@
         </div>
         <div class="hero-visual">
           <div class="frame-label">
-            <span>[ FIG.01 / FLUXON ]</span>
-            <span>IMG_SCALE</span>
+            <span>[ FIG.01 / PORTRAIT ]</span>
+            <span>IDENTITY</span>
           </div>
-          <div class="hero-frame media-scale">
+          <div class="hero-frame hero-frame--portrait media-scale">
             <img
-              src="https://raw.githubusercontent.com/Swayyum/fluxon-releases/main/docs/media/hero.png"
-              alt="Fluxon System Overview dashboard"
-              width="1440"
-              height="900"
+              src="assets/swayam-mehta.jpg"
+              alt="Swayam Mehta"
+              width="1024"
+              height="914"
               fetchpriority="high"
             >
             <div class="halftone" aria-hidden="true"></div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- INTEREST: marquee -->
-    <section class="marquee-band" aria-hidden="true">
-      <div class="marquee-track">
-        <div class="marquee-inner">
-          <span>FLUXON</span><span>///</span>
-          <span>TYPATRO</span><span>///</span>
-          <span>OURA MENU BAR</span><span>///</span>
-          <span>IP FINDER</span><span>///</span>
-          <span>BHAGAVAD GITA</span><span>///</span>
-          <span>RAYCAST</span><span>///</span>
-          <span>MACOS</span><span>///</span>
-          <span>TERMINAL</span><span>///</span>
-          <span>SWAYAM MEHTA</span><span>///</span>
-        </div>
-        <div class="marquee-inner" aria-hidden="true">
-          <span>FLUXON</span><span>///</span>
-          <span>TYPATRO</span><span>///</span>
-          <span>OURA MENU BAR</span><span>///</span>
-          <span>IP FINDER</span><span>///</span>
-          <span>BHAGAVAD GITA</span><span>///</span>
-          <span>RAYCAST</span><span>///</span>
-          <span>MACOS</span><span>///</span>
-          <span>TERMINAL</span><span>///</span>
-          <span>SWAYAM MEHTA</span><span>///</span>
         </div>
       </div>
     </section>
@@ -176,6 +151,42 @@
           </dl>
         </aside>
         <div id="stack-cards" class="stack-cards"></div>
+      </div>
+    </section>
+
+    <!-- CAREER: skills / experience / GitHub (layout patterns from manixh.dev) -->
+    <section id="career" class="career-section">
+      <div class="section-rule">
+        <span class="rule-id">FIELD RECORD</span>
+        <span class="rule-line"></span>
+        <span class="rule-id">SKILLS · EXPERIENCE · GITHUB</span>
+      </div>
+      <div class="career-head">
+        <h2>HOW THE<br>WORK GETS DONE</h2>
+        <p>
+          Skills and roles from the live résumé, plus a year of public GitHub activity under Swayyum—same engineer who ships the products above.
+        </p>
+      </div>
+
+      <div class="career-block" id="skills">
+        <p class="career-block-rule">[ MY SKILLS ]</p>
+        <p class="scrub-text career-lead" id="skills-intro"></p>
+        <div id="skills-marquees" class="skills-marquees" aria-label="Skill marquees"></div>
+        <p class="skills-certs-label">CERTIFICATION</p>
+        <ul id="skills-certs" class="skills-certs"></ul>
+      </div>
+
+      <div class="career-block" id="experience">
+        <p class="career-block-rule">[ WORK EXPERIENCE ]</p>
+        <p class="scrub-text career-lead" id="experience-intro"></p>
+        <div id="experience-timeline" class="experience-timeline"></div>
+        <p class="skills-certs-label">EDUCATION</p>
+        <div id="education-rail" class="edu-rail"></div>
+      </div>
+
+      <div class="career-block" id="github-contrib">
+        <p class="career-block-rule">[ GITHUB CONTRIBUTIONS ]</p>
+        <div id="github-activity" class="gh-activity" aria-live="polite"></div>
       </div>
     </section>
 
@@ -278,6 +289,8 @@
   <script src="rare-folder.js"></script>
   <script src="rare-scroll.js"></script>
   <script src="products.js"></script>
+  <script src="career-data.js"></script>
+  <script src="career.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -96,7 +96,11 @@ p,
 .manifest-copy p,
 .product-desc,
 .accordion-body p,
-.telem-tag {
+.telem-tag,
+.career-head p,
+.gh-total,
+.exp-body li,
+.edu-degree {
   text-transform: none;
   letter-spacing: 0;
 }
@@ -397,6 +401,26 @@ p,
   filter: contrast(1.08) grayscale(0.15);
 }
 
+/* Portrait plate — personal headshot (white studio bg) */
+.hero-frame--portrait {
+  background: #f4f4f5;
+  aspect-ratio: 4 / 5;
+  max-height: min(58vh, 520px);
+}
+
+.hero-frame--portrait img {
+  max-height: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  filter: contrast(1.04) saturate(0.96);
+}
+
+.hero-frame--portrait .halftone {
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+}
+
 .halftone {
   position: absolute;
   inset: 0;
@@ -405,36 +429,6 @@ p,
   mix-blend-mode: multiply;
   background-image: radial-gradient(circle, var(--ink) 0.9px, transparent 1.1px);
   background-size: 4px 4px;
-}
-
-/* Marquee */
-.marquee-band {
-  border-bottom: 2px solid var(--line);
-  background: var(--ink);
-  color: var(--paper);
-  overflow: hidden;
-  padding: 0.85rem 0;
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-}
-
-.marquee-inner {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  padding-right: 1.25rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-}
-
-.marquee-inner span:nth-child(even) {
-  color: var(--hazard);
 }
 
 /* Sections */
