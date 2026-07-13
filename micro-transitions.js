@@ -17,6 +17,7 @@ const MICRO_ICONS = {
   refresh: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 10-2.6 6.3"/><path d="M21 4v6h-6"/></svg>`,
   bell: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9a6 6 0 0112 0c0 7 3 7 3 7H3s3 0 3-7"/><path d="M10 19a2 2 0 004 0"/></svg>`,
   bellRing: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9a6 6 0 0112 0c0 7 3 7 3 7H3s3 0 3-7"/><path d="M10 19a2 2 0 004 0"/><path d="M2 9c.5-2 1.5-3.5 3-4.5"/><path d="M22 9c-.5-2-1.5-3.5-3-4.5"/></svg>`,
+  mail: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>`,
 };
 
 function iconMarkup(name) {

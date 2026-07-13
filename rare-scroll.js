@@ -7,8 +7,7 @@ const SCROLL_SECTIONS = [
   { id: "stack", label: "Stack" },
   { id: "career", label: "Career" },
   { id: "dossier", label: "Dossier" },
-  { id: "raycast", label: "Raycast" },
-  { id: "manifest", label: "Manifest" },
+  { id: "contact", label: "Contact" },
 ];
 
 function mountRareScrollProgress() {

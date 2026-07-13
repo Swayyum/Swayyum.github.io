@@ -64,6 +64,42 @@ test.describe("scroll reveal animations", () => {
     }
   });
 
+  test("hero portrait is fully visible on load without scroll", async ({
+    page,
+  }) => {
+    await page.goto(BASE, { waitUntil: "networkidle" });
+
+    await page.waitForFunction(() => {
+      const el = document.querySelector(".hero-frame--portrait");
+      if (!el) return false;
+      return parseFloat(getComputedStyle(el).opacity) > 0.95;
+    });
+
+    const portrait = await page.$eval(".hero-frame--portrait", (el) => {
+      const s = getComputedStyle(el);
+      const r = el.getBoundingClientRect();
+      const m = (() => {
+        const t = s.transform;
+        if (!t || t === "none") return { a: 1, d: 1 };
+        const m2 = t.match(/matrix\(([^)]+)\)/);
+        if (!m2) return { a: 1, d: 1 };
+        const [a, , , d] = m2[1].split(",").map(Number);
+        return { a, d };
+      })();
+      return {
+        opacity: parseFloat(s.opacity),
+        visible: r.width > 0 && r.height > 0,
+        scaleA: m.a,
+        scaleD: m.d,
+      };
+    });
+
+    expect(portrait.visible).toBe(true);
+    expect(portrait.opacity).toBeGreaterThan(0.95);
+    expect(Math.abs(portrait.scaleA - 1)).toBeLessThan(0.05);
+    expect(Math.abs(portrait.scaleD - 1)).toBeLessThan(0.05);
+  });
+
   test("hero CTAs are visible after entrance orchestration", async ({
     page,
   }) => {
@@ -126,6 +162,54 @@ test.describe("scroll reveal animations", () => {
     expect(folderOpacity).toBeGreaterThan(0.95);
   });
 
+  test("stack stage images fully visible when card enters viewport", async ({
+    page,
+  }) => {
+    await page.goto(BASE, { waitUntil: "networkidle" });
+
+    await page.locator("#stage-fluxon").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(900);
+    await page.evaluate(() => {
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+    });
+    await page.waitForTimeout(400);
+
+    const stages = await page.$$eval(".stack-card[id] .stack-card-media", (els) =>
+      els.map((el) => {
+        const s = getComputedStyle(el);
+        const r = el.getBoundingClientRect();
+        const m = (() => {
+          const t = s.transform;
+          if (!t || t === "none") return { a: 1, d: 1 };
+          const m2 = t.match(/matrix\(([^)]+)\)/);
+          if (!m2) return { a: 1, d: 1 };
+          const [a, , , d] = m2[1].split(",").map(Number);
+          return { a, d };
+        })();
+        const inView = r.bottom > 0 && r.top < window.innerHeight;
+        return {
+          id: el.closest(".stack-card")?.id,
+          inView,
+          opacity: parseFloat(s.opacity),
+          scaleA: m.a,
+          scaleD: m.d,
+        };
+      })
+    );
+
+    expect(stages.length).toBeGreaterThanOrEqual(3);
+
+    for (const stage of stages.filter((s) => s.inView)) {
+      expect(stage.opacity).toBeGreaterThan(0.95);
+      expect(Math.abs(stage.scaleA - 1)).toBeLessThan(0.05);
+      expect(Math.abs(stage.scaleD - 1)).toBeLessThan(0.05);
+    }
+
+    const fluxon = stages.find((s) => s.id === "stage-fluxon");
+    expect(fluxon).toBeTruthy();
+    expect(fluxon.opacity).toBeGreaterThan(0.95);
+  });
+
   test("no in-viewport reveal targets stuck at opacity 0", async ({ page }) => {
     await page.goto(BASE, { waitUntil: "networkidle" });
 
@@ -133,8 +217,7 @@ test.describe("scroll reveal animations", () => {
       "#telemetry-grid",
       "#stack",
       "#dossier",
-      "#raycast",
-      "#manifest",
+      "#contact",
       ".cta-band",
     ];
 
@@ -150,7 +233,7 @@ test.describe("scroll reveal animations", () => {
 
     const stuck = await page.evaluate(() => {
       const targets = document.querySelectorAll(
-        ".telem-cell, .accordion-item, #rare-folder-root, .cta-actions .micro-btn, .manifest-links a, .hero-actions .micro-btn"
+        ".telem-cell, #rare-folder-root, .cta-actions .micro-btn, .hero-links a, .hero-actions .micro-btn, .hero-frame--portrait, .stack-card[id], .stack-card-media"
       );
       return [...targets]
         .filter((el) => {

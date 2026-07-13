@@ -25,16 +25,14 @@
 
   <header class="site-header">
     <a class="brand" href="#main-content" aria-label="Swayam Mehta - back to top">
-      <span class="brand-mark">■</span>
+      <span class="brand-mark" aria-hidden="true">[ SM ]</span>
       <span>SWAYAM MEHTA</span>
-      <span class="brand-reg">®</span>
     </a>
     <nav class="site-nav" aria-label="Primary">
       <a href="#units">Work</a>
       <a href="#career">Career</a>
       <a href="#dossier">About</a>
-      <a href="#raycast">Extensions</a>
-      <a href="#manifest">Contact</a>
+      <a href="#contact">Contact</a>
       <a class="micro-btn is-ink is-magnetic is-sm" data-micro="sparkle" href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer">
         <span class="micro-btn__inner">
           <span class="micro-btn__icon">
@@ -56,25 +54,25 @@
     <a href="#units">Work</a>
     <a href="#career">Skills &amp; experience</a>
     <a href="#dossier">About &amp; résumé</a>
-    <a href="#raycast">Raycast extensions</a>
-    <a href="#manifest">Contact</a>
+    <a href="#contact">Contact</a>
     <a href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
   </nav>
 
   <main id="main-content" class="page" tabindex="-1">
     <!-- ATTENTION -->
-    <section class="hero">
+    <section id="top" class="hero">
       <div class="hero-meta">
-        <span>REV 2.0</span>
-        <span>SWAYAM MEHTA</span>
         <span id="clock">00:00:00</span>
       </div>
       <div class="hero-split">
         <div class="hero-copy">
           <p class="hero-kicker">&lt; AI ENGINEER / FORWARD DEPLOYED ENGINEER &gt;</p>
-          <h1 class="hero-title">BUILD.<br>ADAPT.</h1>
+          <h1 class="hero-title">SWAYAM<br>MEHTA</h1>
           <p class="hero-line">
             I turn ambiguous problems into production software: integrating APIs, designing reliable workflows, and shipping tools that work in the hands of real users.
+          </p>
+          <p class="hero-bio">
+            AI Engineer / Forward Deployed Engineer focused on the last mile between a capable system and a useful outcome. I combine product judgment with hands-on engineering to prototype quickly, integrate with real environments, and carry solutions into production.
           </p>
           <div class="hero-actions">
             <a class="micro-btn is-primary is-magnetic" data-micro="slide-arrow" href="#units">
@@ -96,13 +94,15 @@
               </span>
             </a>
           </div>
+          <nav class="hero-links" aria-label="Social profiles">
+            <a href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer">[ GITHUB ]</a>
+            <a href="https://linkedin.com/in/swayam-mehta" target="_blank" rel="noopener noreferrer">[ LINKEDIN ]</a>
+            <a href="mailto:swayamehta1@gmail.com">[ EMAIL ]</a>
+            <a href="https://www.raycast.com/swayam_mehta" target="_blank" rel="noopener noreferrer">[ RAYCAST ]</a>
+          </nav>
         </div>
         <div class="hero-visual">
-          <div class="frame-label">
-            <span>[ FIG.01 / PORTRAIT ]</span>
-            <span>IDENTITY</span>
-          </div>
-          <div class="hero-frame hero-frame--portrait media-scale">
+          <div class="hero-frame hero-frame--portrait">
             <img
               src="assets/swayam-mehta.jpg"
               alt="Swayam Mehta"
@@ -130,6 +130,10 @@
         </p>
       </div>
       <div id="telemetry-grid" class="telemetry-grid"></div>
+      <p class="store-note" id="raycast-store-cta">
+        RAYCAST EXTENSIONS //
+        <a href="https://www.raycast.com/swayam_mehta" target="_blank" rel="noopener noreferrer">raycast.com/swayam_mehta</a>
+      </p>
     </section>
 
     <!-- Showcase: per-app visual stages -->
@@ -144,11 +148,6 @@
           <h2>BUILT<br>END TO END</h2>
           <p class="pin-copy">Product decisions, implementation, integration, release, and iteration—owned across the stack.</p>
           <nav id="stage-jump" class="stage-jump" aria-label="Jump to app"></nav>
-          <dl class="pin-stats">
-            <div><dt>APPS</dt><dd id="stat-apps">03</dd></div>
-            <div><dt>PLUGINS</dt><dd id="stat-plugins">02</dd></div>
-            <div><dt>STATUS</dt><dd class="stat-live">LIVE</dd></div>
-          </dl>
         </aside>
         <div id="stack-cards" class="stack-cards"></div>
       </div>
@@ -183,11 +182,6 @@
         <p class="skills-certs-label">EDUCATION</p>
         <div id="education-rail" class="edu-rail"></div>
       </div>
-
-      <div class="career-block" id="github-contrib">
-        <p class="career-block-rule">[ GITHUB CONTRIBUTIONS ]</p>
-        <div id="github-activity" class="gh-activity" aria-live="polite"></div>
-      </div>
     </section>
 
     <!-- DOSSIER / resume vault -->
@@ -200,7 +194,7 @@
       <div class="rare-folder-layout">
         <div class="rare-folder-copy">
           <p class="rare-folder-hint">&lt; EXPERIENCE / CAPABILITIES &gt;</p>
-          <h2>REVIEW THE<br>RÉSUMÉ</h2>
+          <h2>REVIEW THE RÉSUMÉ</h2>
           <p>
             Experience, technical depth, and shipped work from Swayam Mehta—an engineer who can work directly with users, find the real constraint, and deliver the system around it.
           </p>
@@ -229,43 +223,8 @@
       </div>
     </section>
 
-    <!-- RAYCAST: horizontal accordion -->
-    <section id="raycast" class="section raycast-section">
-      <div class="section-rule">
-        <span class="rule-id">WORKFLOW SOFTWARE</span>
-        <span class="rule-line"></span>
-        <span class="rule-id">EXTENSIONS</span>
-      </div>
-      <div class="raycast-head">
-        <h2>TOOLS AT THE<br>POINT OF WORK</h2>
-        <p>Focused Raycast extensions that bring network intelligence, search, and optional AI assistance directly into a user's command workflow.</p>
-      </div>
-      <div id="accordion" class="accordion"></div>
-      <p class="store-note">
-        FULL STORE //
-        <a href="https://www.raycast.com/swayam_mehta" target="_blank" rel="noopener noreferrer">raycast.com/swayam_mehta</a>
-      </p>
-    </section>
-
-    <!-- MANIFEST -->
-    <section id="manifest" class="section manifest">
-      <div class="manifest-grid">
-        <div class="manifest-copy">
-          <h2>SWAYAM<br>MEHTA</h2>
-          <p>
-            AI Engineer / Forward Deployed Engineer focused on the last mile between a capable system and a useful outcome. I combine product judgment with hands-on engineering to prototype quickly, integrate with real environments, and carry solutions into production.
-          </p>
-        </div>
-        <div class="manifest-links">
-          <a href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer">[ GITHUB ]</a>
-          <a href="https://linkedin.com/in/swayam-mehta" target="_blank" rel="noopener noreferrer">[ LINKEDIN ]</a>
-          <a href="https://www.raycast.com/swayam_mehta" target="_blank" rel="noopener noreferrer">[ RAYCAST ]</a>
-        </div>
-      </div>
-    </section>
-
     <!-- ACTION -->
-    <section class="cta-band">
+    <section id="contact" class="cta-band">
       <p class="cta-kicker">&gt;&gt;&gt; OPEN TO AI ENGINEERING &amp; FORWARD DEPLOYED ROLES</p>
       <h2 class="cta-title">LET'S SOLVE THE<br>REAL PROBLEM.</h2>
       <div class="cta-actions" id="cta-actions"></div>

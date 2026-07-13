@@ -1,6 +1,6 @@
 // Career content for Skills / Experience / GitHub sections.
 // Source of truth: assets/Swayam_Mehta_Resume.pdf (extracted July 2026).
-// Do not invent employers or dates beyond the résumé.
+// McKim & Creed added from current role; dates/bullets pending résumé update.
 
 const CAREER = {
   skillsIntro:
@@ -29,7 +29,6 @@ const CAREER = {
       id: "ops",
       label: "Cloud, data & ops",
       items: [
-        { name: "AWS", mark: "AW" },
         { name: "Azure", mark: "AZ" },
         { name: "Azure DevOps", mark: "AD" },
         { name: "Docker", mark: "DK" },
@@ -38,7 +37,6 @@ const CAREER = {
         { name: "PostgreSQL", mark: "PG" },
         { name: "MongoDB", mark: "MG" },
         { name: "CI / CD", mark: "CI" },
-        { name: "Power BI", mark: "BI" },
         { name: "Terraform", mark: "IA" },
         { name: "Ansible", mark: "AN" },
       ],
@@ -54,14 +52,25 @@ const CAREER = {
     "Customer-facing deployment work—pilots, demos, production AI systems—and the engineering underneath.",
   experience: [
     {
+      id: "mckim-creed",
+      company: "McKim & Creed",
+      role: "AI Specialist",
+      location: "",
+      start: "—",
+      end: "Present",
+      status: "active",
+      url: null,
+      bullets: [],
+    },
+    {
       id: "sam-ssam",
       company: "SAM Analytic Solutions",
       team: "SSAM Team",
       role: "Junior Systems Engineer",
       location: "Raleigh, NC",
       start: "May 2024",
-      end: "Present",
-      status: "active",
+      end: "—",
+      status: "done",
       url: null,
       bullets: [
         "Worked directly with customers and internal stakeholders to deploy AI-driven monitoring and analytics systems into production environments.",
@@ -87,9 +96,4 @@ const CAREER = {
       status: "done",
     },
   ],
-  github: {
-    login: "Swayyum",
-    profileUrl: "https://github.com/Swayyum",
-    dataUrl: "github-contributions.json",
-  },
 };

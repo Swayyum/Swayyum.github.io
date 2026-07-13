@@ -8,19 +8,19 @@ const FOLDER_FLAP_PATH =
 
 const CARD_POSES = {
   rest: [
-    { x: 40, y: -10, rotate: 10 },
-    { x: 3, y: -20, rotate: 2 },
-    { x: -40, y: -22, rotate: -5 },
+    { x: 40, y: -52, rotate: 10 },
+    { x: 3, y: -64, rotate: 2 },
+    { x: -40, y: -68, rotate: -5 },
   ],
   hover: [
-    { x: 40, y: -30, rotate: 14 },
-    { x: 3, y: -35, rotate: -1 },
-    { x: -40, y: -44, rotate: -9 },
+    { x: 40, y: -72, rotate: 14 },
+    { x: 3, y: -78, rotate: -1 },
+    { x: -40, y: -86, rotate: -9 },
   ],
   open: [
-    { x: 70, y: -160, rotate: 18 },
-    { x: 0, y: -180, rotate: -3 },
-    { x: -65, y: -170, rotate: -14 },
+    { x: 70, y: -175, rotate: 18 },
+    { x: 0, y: -195, rotate: -3 },
+    { x: -65, y: -185, rotate: -14 },
   ],
 };
 
@@ -29,8 +29,9 @@ function cardLinesMarkup(isResume) {
     if (i === 0) return `<span></span>`;
     return `<div style="display:flex;gap:6px"><span class="is-half"></span><span class="is-half"></span></div>`;
   }).join("");
-  return `<div class="rare-folder__card-lines">${rows}</div>
-    <div class="rare-folder__card-meta">${isResume ? "RESUME.PDF // OPEN" : "FIELD / LOG"}</div>`;
+  return `<div class="rare-folder__card-label">RÉSUMÉ</div>
+    <div class="rare-folder__card-lines">${rows}</div>
+    <div class="rare-folder__card-meta">${isResume ? "MEHTA · PDF" : "MEHTA · COPY"}</div>`;
 }
 
 function mountRareFolder(root) {

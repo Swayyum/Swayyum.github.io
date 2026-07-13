@@ -141,6 +141,15 @@ function renderCtaActions() {
       size: "xl",
       targetBlank: true,
     }),
+    createMicroButton({
+      href: "mailto:swayamehta1@gmail.com",
+      label: "Email Me",
+      micro: "slide-arrow",
+      icon: "mail",
+      icon2: "arrow",
+      variant: "ghost",
+      size: "xl",
+    }),
   ].join("");
 }
 
@@ -203,29 +212,20 @@ function renderTelemetry() {
     )
     .join("");
 
-  const upcomingCell =
-    typeof UPCOMING !== "undefined" && UPCOMING.length
-      ? `
-    <article class="telem-cell is-wide">
-      <div class="telem-body">
-        <div>
-          <div class="telem-top">
-            <span>COMING SOON</span>
-            <span class="telem-status">OPEN</span>
-          </div>
-          <h3 class="telem-name">${UPCOMING[0].name}</h3>
-          <p class="telem-tag">${UPCOMING[0].tagline}</p>
-        </div>
-      </div>
-    </article>`
-      : "";
+  mount.innerHTML = appCells + pluginCells;
+}
 
-  mount.innerHTML = appCells + pluginCells + upcomingCell;
+function stackCardMeta(app) {
+  return [app.platform, app.version ? `v${app.version}` : null].filter(Boolean).join(" · ");
+}
 
-  const appStat = document.getElementById("stat-apps");
-  const pluginStat = document.getElementById("stat-plugins");
-  if (appStat) appStat.textContent = String(apps.length).padStart(2, "0");
-  if (pluginStat) pluginStat.textContent = String(plugins.length).padStart(2, "0");
+function stackCardFeatures(app) {
+  if (!app.features?.length) return "";
+  const items = app.features.map((feature) => `<li>${feature}</li>`).join("");
+  const license = app.licenseNote
+    ? `<p class="stack-license">${app.licenseNote}</p>`
+    : "";
+  return `<ul class="stack-features" aria-label="${app.name} features">${items}</ul>${license}`;
 }
 
 function renderStageJump(featured) {
@@ -261,18 +261,33 @@ function renderStackCards() {
         <div class="stack-card-body">
           <div>
             <div class="telem-top">
-              <span>${app.platform}</span>
+              <span>${stackCardMeta(app)}</span>
               <span class="telem-status">${app.status}</span>
             </div>
             <h3>${app.name}</h3>
             <p class="stack-tagline">${app.tagline}</p>
             <p>${app.description}</p>
+            ${stackCardFeatures(app)}
           </div>
           <div class="telem-actions">${linkButtons(app.links)}</div>
         </div>
       </article>`
     )
     .join("");
+}
+
+function settleVisibleStackCards() {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+
+  gsap.utils.toArray(".stack-card").forEach((card) => {
+    const rect = card.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight * 0.9 && rect.bottom > window.innerHeight * 0.05;
+    if (!inView) return;
+
+    const media = card.querySelector(".stack-card-media");
+    gsap.set(card, { opacity: 1, scale: 1, y: 0, clearProps: "transform" });
+    if (media) gsap.set(media, { opacity: 1, scale: 1, clearProps: "transform" });
+  });
 }
 
 function primeStageMedia() {
@@ -285,6 +300,7 @@ function primeStageMedia() {
     const refresh = () => {
       if (typeof ScrollTrigger === "undefined") return;
       ScrollTrigger.refresh();
+      settleVisibleStackCards();
     };
 
     if (img.complete) {
@@ -293,49 +309,6 @@ function primeStageMedia() {
     }
 
     img.addEventListener("load", refresh, { once: true });
-  });
-}
-
-function renderAccordion() {
-  const mount = document.getElementById("accordion");
-  if (!mount || typeof PRODUCTS === "undefined") return;
-
-  const plugins = PRODUCTS.filter((p) => p.kind === "raycast");
-  mount.innerHTML = plugins
-    .map(
-      (plugin, index) => `
-      <article class="accordion-item${index === 0 ? " is-open" : ""}" tabindex="0" role="button" aria-expanded="${index === 0 ? "true" : "false"}">
-        <div>
-          <p class="accordion-meta">${plugin.platform}</p>
-          <h3>${plugin.name}</h3>
-        </div>
-        <div class="accordion-body">
-          <p>${plugin.description}</p>
-          <div class="telem-actions">${linkButtons(plugin.links)}</div>
-        </div>
-      </article>`
-    )
-    .join("");
-
-  const items = [...mount.querySelectorAll(".accordion-item")];
-  items.forEach((item) => {
-    const activate = () => {
-      items.forEach((el) => {
-        el.classList.remove("is-open");
-        el.setAttribute("aria-expanded", "false");
-      });
-      item.classList.add("is-open");
-      item.setAttribute("aria-expanded", "true");
-    };
-    item.addEventListener("mouseenter", activate);
-    item.addEventListener("focus", activate);
-    item.addEventListener("click", activate);
-    item.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        activate();
-      }
-    });
   });
 }
 
@@ -377,6 +350,11 @@ function initMotion() {
       "-=0.4"
     )
     .from(
+      ".hero-bio",
+      { y: 18, opacity: 0, duration: 0.45 },
+      "-=0.35"
+    )
+    .from(
       ".hero-actions .micro-btn",
       {
         y: 18,
@@ -389,6 +367,18 @@ function initMotion() {
       "-=0.28"
     )
     .from(
+      ".hero-links a",
+      {
+        y: 12,
+        opacity: 0,
+        stagger: 0.08,
+        duration: 0.4,
+        ease: "power3.out",
+        clearProps: "transform",
+      },
+      "-=0.22"
+    )
+    .from(
       ".hero-frame",
       {
         y: 42,
@@ -396,6 +386,7 @@ function initMotion() {
         opacity: 0,
         duration: 0.9,
         ease: "power3.out",
+        clearProps: "transform",
       },
       "-=0.55"
     );
@@ -415,24 +406,6 @@ function initMotion() {
     });
   }
 
-  // Scroll-driven image scale / fade
-  gsap.utils.toArray(".media-scale, .stack-card-media").forEach((el) => {
-    gsap.fromTo(
-      el,
-      { scale: 0.88, opacity: 0.35 },
-      {
-        scale: 1,
-        opacity: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-          end: "bottom 20%",
-          scrub: true,
-        },
-      }
-    );
-  });
 
   // Scrubbing text reveal (word stagger tied to scroll)
   const scrub = document.querySelector(".scrub-text");
@@ -482,7 +455,7 @@ function initMotion() {
   );
 
   // Section titles — slide in from left
-  gsap.utils.toArray(".telemetry-head h2, .raycast-head h2, .stack-pin h2, .rare-folder-copy h2, .manifest-copy h2").forEach((title) => {
+  gsap.utils.toArray(".telemetry-head h2, .stack-pin h2, .rare-folder-copy h2").forEach((title) => {
     gsap.from(title, {
       x: -28,
       opacity: 0,
@@ -539,38 +512,49 @@ function initMotion() {
   }
 
   cards.forEach((card, index) => {
+    const media = card.querySelector(".stack-card-media");
+
     gsap.fromTo(
       card,
-      { y: 90 + index * 24, opacity: 0.12, scale: 0.94 },
+      { y: 48 + index * 8, opacity: 0.2, scale: 0.97 },
       {
         y: 0,
         opacity: 1,
         scale: 1,
-        ease: "none",
+        duration: 0.7,
+        ease: "power3.out",
+        clearProps: "transform",
+        immediateRender: false,
         scrollTrigger: {
           trigger: card,
           start: "top 88%",
-          end: "top 42%",
-          scrub: true,
+          once: true,
         },
       }
     );
+
+    if (media) {
+      gsap.fromTo(
+        media,
+        { scale: 0.96, opacity: 0.4 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.75,
+          ease: "power3.out",
+          clearProps: "transform",
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: card,
+            start: "top 88%",
+            once: true,
+          },
+        }
+      );
+    }
   });
 
-  // Accordion — slide in + stagger
-  gsap.from(".accordion-item", {
-    x: 28,
-    opacity: 0,
-    stagger: 0.14,
-    duration: 0.6,
-    ease: "power2.out",
-    clearProps: "transform",
-    scrollTrigger: {
-      trigger: "#accordion",
-      start: "top 80%",
-      once: true,
-    },
-  });
+  settleVisibleStackCards();
 
   // Career — skills / timeline / github
   gsap.from("#skills-marquees", {
@@ -590,15 +574,6 @@ function initMotion() {
     clearProps: "transform",
     scrollTrigger: { trigger: "#experience-timeline", start: "top 80%", once: true },
   });
-  gsap.from("#github-activity", {
-    y: 20,
-    opacity: 0,
-    duration: 0.55,
-    ease: "power2.out",
-    clearProps: "transform",
-    scrollTrigger: { trigger: "#github-contrib", start: "top 80%", once: true },
-  });
-
   // Dossier — scroll reveal
   gsap.from(".rare-folder-copy > *", {
     y: 24,
@@ -617,17 +592,6 @@ function initMotion() {
     ease: "power3.out",
     clearProps: "transform",
     scrollTrigger: { trigger: "#rare-folder-root", start: "top 80%", once: true },
-  });
-
-  // Manifest links — stagger cascade
-  gsap.from(".manifest-links a", {
-    x: 20,
-    opacity: 0,
-    stagger: 0.1,
-    duration: 0.45,
-    ease: "power2.out",
-    clearProps: "transform",
-    scrollTrigger: { trigger: ".manifest-grid", start: "top 80%", once: true },
   });
 
   // CTA — slide in
@@ -655,39 +619,6 @@ function initMotion() {
     ease: "power3.out",
     clearProps: "transform",
     scrollTrigger: { trigger: ".cta-actions", start: "top 85%", once: true },
-  });
-
-  // Number ticker — stats count up on enter
-  animateStatTickers();
-}
-
-function animateStatTickers() {
-  const nodes = [
-    document.getElementById("stat-apps"),
-    document.getElementById("stat-plugins"),
-  ].filter(Boolean);
-
-  nodes.forEach((el) => {
-    const target = parseInt(el.textContent, 10);
-    if (Number.isNaN(target)) return;
-    el.textContent = "00";
-
-    ScrollTrigger.create({
-      trigger: el,
-      start: "top 90%",
-      once: true,
-      onEnter: () => {
-        const state = { val: 0 };
-        gsap.to(state, {
-          val: target,
-          duration: 0.9,
-          ease: "power2.out",
-          onUpdate: () => {
-            el.textContent = String(Math.round(state.val)).padStart(2, "0");
-          },
-        });
-      },
-    });
   });
 }
 
@@ -751,7 +682,6 @@ function initTelemHoverTilt() {
 
 renderTelemetry();
 renderStackCards();
-renderAccordion();
 renderCtaActions();
 primeStageMedia();
 initMotion();

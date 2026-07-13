@@ -1,8 +1,8 @@
 /* Interaction & motion polish — animation vocabulary */
 
 @keyframes pulse-mark {
-  0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--hazard) 18%, transparent); }
-  50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--hazard) 8%, transparent); }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.72; }
 }
 
 .brand-mark {

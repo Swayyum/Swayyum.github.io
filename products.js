@@ -7,9 +7,19 @@ const PRODUCTS = [
     featured: true,
     status: "shipped",
     platform: "macOS 14+",
+    version: "1.0",
     tagline: "Production-grade system observability with live metrics and a visual Disk Explorer.",
     description:
-      "A native macOS product that turns low-level CPU, memory, network, disk, and process telemetry into an operator-friendly interface.",
+      "A native macOS monitor that turns CPU, memory, network, disk, and process telemetry into an operator-friendly dashboard — metrics stay on your Mac, no account or cloud sync.",
+    features: [
+      "Overview — live CPU, memory, network, disk, battery, and thermals",
+      "Processes — sort and inspect what's burning CPU and RAM",
+      "Extended metrics & Time Travel — deeper graphs and scrubbable history",
+      "Disk Explorer — folder picker + WizTree-style treemap for space hogs",
+      "Menu bar companion — glanceable stats, including over fullscreen apps",
+      "Startup Apps & System Info — login items, hardware, storage, and network",
+    ],
+    licenseNote: "Free for personal use",
     image:
       "https://raw.githubusercontent.com/Swayyum/fluxon-releases/main/docs/media/hero.png",
     imageAlt: "Fluxon System Overview dashboard",
@@ -59,10 +69,11 @@ const PRODUCTS = [
     featured: true,
     status: "shipped",
     platform: "macOS 14+",
-    tagline: "A secure Oura API integration that turns health data into timely actions.",
+    tagline:
+      "Native macOS menu bar app that turns Oura health signals into clear daily actions.",
     description:
-      "A native SwiftUI client integrating OAuth-protected Oura data, local Keychain storage, score dashboards, and context-aware reminders.",
-    image: "assets/oura-menu-bar-hero.jpg",
+      "Opens from the menu bar with Readiness, Sleep, and Activity at a glance. OAuth-protected sync, Keychain storage, and context-aware reminders — your data stays on your Mac.",
+    image: "assets/oura-menu-bar-readme.png",
     imageAlt: "Oura Menu Bar showing recovery scores and move reminders in the macOS menu bar",
     accent: "#1d4ed8",
     links: [
@@ -126,14 +137,5 @@ const PRODUCTS = [
         href: "https://github.com/Swayyum/Bhagavad-Gita-Raycast-Plugin",
       },
     ],
-  },
-];
-
-// Placeholder slots for future apps — keep or replace as you ship.
-const UPCOMING = [
-  {
-    id: "next",
-    name: "Next up",
-    tagline: "More apps land here as they ship.",
   },
 ];
