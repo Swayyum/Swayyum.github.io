@@ -15,7 +15,7 @@ const PENROSE_MARKUP = `
   <defs>
     <path id="penrose-tread" d="M0 0 L37 18 L0 36 L-37 18 Z"/>
   </defs>
-  <g class="penrose-stairs" transform="translate(-1.2 -0.4) scale(0.112)">
+  <g class="penrose-stairs" transform="translate(-0.4 2.8) scale(0.118)">
     <path class="penrose-wall penrose-wall--a" d="M279 36 L242 54 V46 L205 64 V56 L168 74 V66 L131 84 V76 L94 94 V171 H279 Z"/>
     <path class="penrose-wall penrose-wall--b" d="M316 61 V68 L279 86 V79 Z"/>
     <path class="penrose-wall penrose-wall--c" d="M316 104 L279 86 V79 L242 61 V160 H316 Z"/>
