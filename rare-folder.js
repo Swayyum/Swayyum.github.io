@@ -8,19 +8,19 @@ const FOLDER_FLAP_PATH =
 
 const CARD_POSES = {
   rest: [
-    { x: 40, y: -52, rotate: 10 },
-    { x: 3, y: -64, rotate: 2 },
-    { x: -40, y: -68, rotate: -5 },
+    { x: 40, y: -8, rotate: 10 },
+    { x: 3, y: -18, rotate: 2 },
+    { x: -40, y: -22, rotate: -5 },
   ],
   hover: [
-    { x: 40, y: -72, rotate: 14 },
-    { x: 3, y: -78, rotate: -1 },
-    { x: -40, y: -86, rotate: -9 },
+    { x: 40, y: -48, rotate: 14 },
+    { x: 3, y: -54, rotate: -1 },
+    { x: -40, y: -62, rotate: -9 },
   ],
   open: [
-    { x: 70, y: -175, rotate: 18 },
-    { x: 0, y: -195, rotate: -3 },
-    { x: -65, y: -185, rotate: -14 },
+    { x: 70, y: -200, rotate: 18 },
+    { x: 0, y: -220, rotate: -3 },
+    { x: -65, y: -210, rotate: -14 },
   ],
 };
 

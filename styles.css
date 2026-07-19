@@ -248,13 +248,32 @@ p,
   color: var(--ink);
   cursor: pointer;
   flex-shrink: 0;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  overflow: hidden;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.12s ease,
+    filter 0.12s ease;
+}
+
+.theme-toggle.has-theme-shader {
+  background: transparent;
+}
+
+html[data-theme="dark"] .theme-toggle:not(.has-theme-shader) {
+  background: var(--paper-2);
 }
 
 .theme-toggle:hover {
-  background: var(--hazard);
   border-color: var(--hazard);
-  color: var(--hazard-ink);
+  transform: scale(1.06);
+  filter: brightness(1.08);
+}
+
+.theme-toggle:active {
+  transform: scale(0.97);
+  filter: brightness(0.96);
 }
 
 .theme-toggle:focus-visible {
@@ -262,104 +281,62 @@ p,
   outline-offset: 3px;
 }
 
-/* Host for Penrose stairs mark (theme-toggle-3d.js → SVG) */
-.theme-toggle__3d {
+/* LiquidMetal diamond plate — absolute fill behind the glyph */
+.theme-toggle__shader {
+  position: absolute;
+  inset: 0;
   display: none;
-  width: 40px;
-  height: 40px;
   line-height: 0;
-  overflow: visible;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.theme-toggle.has-theme-3d .theme-toggle__3d {
+.theme-toggle.has-theme-shader .theme-toggle__shader {
   display: block;
 }
 
-.theme-toggle.has-theme-3d .theme-toggle__fallback {
-  display: none !important;
-}
-
-.theme-toggle svg {
-  width: 1rem;
-  height: 1rem;
+.theme-toggle__shader canvas {
   display: block;
+  width: 100% !important;
+  height: 100% !important;
 }
 
-/* Stamp-size Penrose: classic impossible loop, cobalt/zinc, locked view */
-.theme-toggle__penrose {
-  width: 40px;
-  height: 40px;
+/* Crisp vector sun/moon — destination icon, centered over metal */
+.theme-toggle__glyph {
+  position: relative;
+  z-index: 1;
+  width: 1.125rem; /* 18px — reads instantly, leaves metal peek */
+  height: 1.125rem;
   display: block;
-  overflow: visible;
-  transform: rotate(var(--penrose-yaw, 0deg));
-  transform-origin: 50% 55%;
-  will-change: transform;
-}
-
-.theme-toggle__penrose .penrose-wall {
-  stroke: var(--ink);
-  stroke-width: 5;
-  stroke-linejoin: round;
+  pointer-events: none;
+  flex-shrink: 0;
+  color: #0a0a0a;
+  /* Hard halo so the glyph stays crisp on busy metal highlights/shadows */
+  stroke: #f4f4f5;
+  stroke-width: 1.35px;
   paint-order: stroke fill;
+  filter: none;
 }
 
-.theme-toggle__penrose .penrose-wall--a,
-.theme-toggle__penrose .penrose-wall--b {
-  fill: #1d4ed8;
-}
-
-.theme-toggle__penrose .penrose-wall--c,
-.theme-toggle__penrose .penrose-wall--d {
-  fill: #3f3f46;
-}
-
-.theme-toggle__penrose .penrose-wall--e {
-  fill: #52525b;
-}
-
-.theme-toggle__penrose .penrose-step {
-  --penrose-lit: 0;
-}
-
-/* Continuous zinc ribbon — no per-tread stroke (avoids muddy gaps at 40px) */
-.theme-toggle__penrose .penrose-step use {
-  fill: color-mix(in srgb, #fafafa calc(var(--penrose-lit) * 80%), #c4c4cc);
+/* No-WebGL fallback: same glyphs, solid button chrome (hazard hover) */
+.theme-toggle:not(.has-theme-shader) .theme-toggle__glyph {
+  color: var(--ink);
   stroke: none;
+  filter: none;
 }
 
-html[data-theme="dark"] .theme-toggle__penrose .penrose-wall--a,
-html[data-theme="dark"] .theme-toggle__penrose .penrose-wall--b {
-  fill: #3b82f6;
+.theme-toggle:not(.has-theme-shader):hover {
+  background: var(--hazard);
+  color: var(--hazard-ink);
+  filter: none;
 }
 
-html[data-theme="dark"] .theme-toggle__penrose .penrose-wall--c,
-html[data-theme="dark"] .theme-toggle__penrose .penrose-wall--d {
-  fill: #71717a;
+.theme-toggle:not(.has-theme-shader):hover .theme-toggle__glyph {
+  color: inherit;
 }
 
-html[data-theme="dark"] .theme-toggle__penrose .penrose-wall--e {
-  fill: #52525b;
-}
-
-html[data-theme="dark"] .theme-toggle__penrose .penrose-step use {
-  fill: color-mix(in srgb, #fafafa calc(var(--penrose-lit) * 70%), #d4d4d8);
-}
-
-.theme-toggle:hover .theme-toggle__penrose .penrose-wall {
-  fill: color-mix(in srgb, var(--hazard-ink, #09090b) 70%, transparent);
-  stroke: var(--hazard-ink, #09090b);
-}
-
-.theme-toggle:hover .theme-toggle__penrose .penrose-wall--a,
-.theme-toggle:hover .theme-toggle__penrose .penrose-wall--b {
-  fill: var(--hazard-ink, #09090b);
-}
-
-.theme-toggle:hover .theme-toggle__penrose .penrose-step use {
-  fill: #fafafa;
-  stroke: var(--hazard-ink, #09090b);
-}
-
+/* Destination icon: light → moon, dark → sun */
 .theme-toggle .icon-sun {
   display: none;
 }
@@ -381,9 +358,9 @@ html[data-theme="dark"] .theme-toggle .icon-moon {
     transition: none;
   }
 
-  .theme-toggle__penrose {
+  .theme-toggle:hover,
+  .theme-toggle:active {
     transform: none;
-    will-change: auto;
   }
 }
 

@@ -54,7 +54,7 @@
 .rare-folder {
   position: relative;
   width: 100%;
-  min-height: 280px;
+  min-height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -94,16 +94,16 @@
   height: 214px;
   pointer-events: auto;
   will-change: transform;
-  transform: translate3d(40px, -52px, 0) rotate(10deg);
+  transform: translate3d(40px, -8px, 0) rotate(10deg);
 }
 
 .rare-folder__card[data-slot="2"] {
-  transform: translate3d(3px, -64px, 0) rotate(2deg);
+  transform: translate3d(3px, -18px, 0) rotate(2deg);
   z-index: 2;
 }
 
 .rare-folder__card[data-slot="3"] {
-  transform: translate3d(-40px, -68px, 0) rotate(-5deg);
+  transform: translate3d(-40px, -22px, 0) rotate(-5deg);
   z-index: 1;
 }
 
@@ -230,34 +230,42 @@
   stroke: color-mix(in srgb, var(--ink) 42%, var(--paper));
 }
 
-/* Dark theme: keep dossier materials dark (do not invert via --ink/--paper). */
+/*
+  Dark theme: dossier materials must NOT follow inverted --ink/--paper.
+  Light mode keeps dark back + light cards; dark mode uses elevated zinc
+  surfaces so the folder silhouette and docs stay readable on near-black paper.
+*/
 html[data-theme="dark"] .rare-folder__back {
-  background: var(--chip-mark-bg);
-  box-shadow: inset 0 0 8px 2px color-mix(in srgb, #000 45%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--ink) 8%, transparent);
+  /* zinc-600 on paper-2 — folder silhouette must read clearly */
+  background: #52525b;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #d4d4d8 42%, transparent),
+    inset 0 0 12px 2px color-mix(in srgb, #000 45%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fafafa 18%, transparent);
 }
 
 html[data-theme="dark"] .rare-folder__card-face {
-  background: color-mix(in srgb, var(--paper-2) 55%, #3f3f46);
-  border-color: color-mix(in srgb, var(--line) 28%, transparent);
-  box-shadow: inset 3px 5px 8px color-mix(in srgb, #000 40%, transparent);
+  /* elevated zinc card — never paper-white */
+  background: #3f3f46;
+  border-color: color-mix(in srgb, #a1a1aa 45%, transparent);
+  box-shadow: inset 3px 5px 8px color-mix(in srgb, #000 50%, transparent);
 }
 
 html[data-theme="dark"] .rare-folder__card-label {
-  color: var(--ink);
+  color: #f4f4f5;
 }
 
 html[data-theme="dark"] .rare-folder__card-lines span {
-  background: color-mix(in srgb, var(--ink) 16%, transparent);
+  background: color-mix(in srgb, #a1a1aa 28%, transparent);
 }
 
 html[data-theme="dark"] .rare-folder__card-meta {
-  color: var(--ink-soft);
+  color: #a1a1aa;
 }
 
 html[data-theme="dark"] .rare-folder__card.is-resume .rare-folder__card-face {
-  background: color-mix(in srgb, var(--paper-2) 35%, #3f3f46);
-  border-color: color-mix(in srgb, var(--hazard) 45%, var(--line));
+  background: #52525b;
+  border-color: color-mix(in srgb, var(--hazard) 55%, #71717a);
 }
 
 html[data-theme="dark"] .rare-folder__card.is-resume .rare-folder__card-label,
@@ -266,16 +274,17 @@ html[data-theme="dark"] .rare-folder__card.is-resume .rare-folder__card-meta {
 }
 
 html[data-theme="dark"] .rare-folder__flap-blur {
-  background: color-mix(in srgb, var(--paper-2) 42%, transparent);
+  /* dark frost wash — avoid milky light glass */
+  background: color-mix(in srgb, #18181b 78%, transparent);
 }
 
 html[data-theme="dark"] .rare-folder__flap-fill {
-  fill: color-mix(in srgb, var(--chip-mark-bg) 70%, var(--paper));
-  fill-opacity: 0.62;
+  fill: #27272a;
+  fill-opacity: 0.82;
 }
 
 html[data-theme="dark"] .rare-folder__flap-stroke {
-  stroke: color-mix(in srgb, var(--line) 42%, transparent);
+  stroke: color-mix(in srgb, #a1a1aa 38%, transparent);
 }
 
 .rare-folder-actions {
