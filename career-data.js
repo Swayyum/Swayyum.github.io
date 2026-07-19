@@ -3,8 +3,6 @@
 // McKim & Creed added from current role; dates/bullets pending résumé update.
 
 const CAREER = {
-  skillsIntro:
-    "Languages, AI tooling, cloud, and systems work from production deployments and shipped products—not a demo checklist.",
   skillRows: [
     {
       id: "core",
@@ -46,10 +44,9 @@ const CAREER = {
     {
       name: "Complete Terraform and Ansible Bootcamp",
       issuer: "Udemy",
+      icon: "udemy.svg",
     },
   ],
-  experienceIntro:
-    "Customer-facing deployment work—pilots, demos, production AI systems—and the engineering underneath.",
   experience: [
     {
       id: "mckim-creed",
@@ -60,6 +57,8 @@ const CAREER = {
       end: "Present",
       status: "active",
       url: null,
+      logo: "assets/mckim-creed-logo.png",
+      logoDark: "assets/mckim-creed-logo-dark.png",
       bullets: [],
     },
     {
@@ -69,9 +68,11 @@ const CAREER = {
       role: "Junior Systems Engineer",
       location: "Raleigh, NC",
       start: "May 2024",
-      end: "—",
+      end: "April 2026",
       status: "done",
       url: null,
+      logo: "assets/sam-analytic-logo.png",
+      logoDark: "assets/sam-analytic-logo-dark.png",
       bullets: [
         "Worked directly with customers and internal stakeholders to deploy AI-driven monitoring and analytics systems into production environments.",
         "Planned and delivered live technical demonstrations, proof-of-value pilots, and solution walkthroughs for technical and non-technical audiences.",

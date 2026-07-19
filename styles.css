@@ -6,6 +6,7 @@
 */
 
 :root {
+  color-scheme: light;
   --paper: #f4f4f5;
   --paper-2: #e4e4e7;
   --ink: #18181b;
@@ -13,10 +14,31 @@
   --line: #18181b;
   --hazard: #1d4ed8;
   --hazard-ink: #f4f4f5;
+  --chip-mark-bg: #18181b;
+  --chip-mark-fg: #f4f4f5;
+  --noise-opacity: 0.07;
+  --noise-blend: multiply;
+  --theme-color: #f4f4f5;
   --font-display: "Archivo Black", Impact, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --header-h: 3.5rem;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #09090b;
+  --paper-2: #18181b;
+  --ink: #f4f4f5;
+  --ink-soft: #a1a1aa;
+  --line: #e4e4e7;
+  --hazard: #3b82f6;
+  --hazard-ink: #09090b;
+  --chip-mark-bg: #27272a;
+  --chip-mark-fg: #f4f4f5;
+  --noise-opacity: 0.12;
+  --noise-blend: soft-light;
+  --theme-color: #09090b;
 }
 
 *,
@@ -112,8 +134,8 @@ p,
   position: fixed;
   inset: 0;
   z-index: 80;
-  opacity: 0.07;
-  mix-blend-mode: multiply;
+  opacity: var(--noise-opacity);
+  mix-blend-mode: var(--noise-blend);
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -156,14 +178,43 @@ p,
 }
 
 .brand-mark {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.45rem;
+  height: 1.45rem;
   color: var(--hazard);
-  padding: 0.15rem 0.35rem;
-  border: 1px solid var(--hazard);
-  line-height: 1;
+  line-height: 0;
+}
+
+.brand-monogram {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.brand-monogram__ribbon {
+  pointer-events: none;
+}
+
+.brand-monogram__glyph {
+  fill: var(--paper);
+  stroke: none;
+}
+
+.brand-name {
+  letter-spacing: -0.03em;
+}
+
+.brand:hover .brand-mark {
+  color: var(--ink);
+}
+
+.header-end {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .site-nav {
@@ -180,6 +231,160 @@ p,
 
 .site-nav a:hover {
   color: var(--hazard);
+}
+
+.theme-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 2px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--hazard);
+  border-color: var(--hazard);
+  color: var(--hazard-ink);
+}
+
+.theme-toggle:focus-visible {
+  outline: 3px solid var(--hazard);
+  outline-offset: 3px;
+}
+
+/* Host for Penrose stairs mark (theme-toggle-3d.js → SVG) */
+.theme-toggle__3d {
+  display: none;
+  width: 40px;
+  height: 40px;
+  line-height: 0;
+  overflow: visible;
+}
+
+.theme-toggle.has-theme-3d .theme-toggle__3d {
+  display: block;
+}
+
+.theme-toggle.has-theme-3d .theme-toggle__fallback {
+  display: none !important;
+}
+
+.theme-toggle svg {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+/* Stamp-size Penrose: classic impossible loop, cobalt/zinc, locked view */
+.theme-toggle__penrose {
+  width: 40px;
+  height: 40px;
+  display: block;
+  overflow: visible;
+  transform: rotate(var(--penrose-yaw, 0deg));
+  transform-origin: 50% 55%;
+  will-change: transform;
+}
+
+.theme-toggle__penrose .penrose-wall {
+  stroke: var(--ink);
+  stroke-width: 5;
+  stroke-linejoin: round;
+  paint-order: stroke fill;
+}
+
+.theme-toggle__penrose .penrose-wall--a,
+.theme-toggle__penrose .penrose-wall--b {
+  fill: #1d4ed8;
+}
+
+.theme-toggle__penrose .penrose-wall--c,
+.theme-toggle__penrose .penrose-wall--d {
+  fill: #3f3f46;
+}
+
+.theme-toggle__penrose .penrose-wall--e {
+  fill: #52525b;
+}
+
+.theme-toggle__penrose .penrose-step {
+  --penrose-lit: 0;
+}
+
+/* Continuous zinc ribbon — no per-tread stroke (avoids muddy gaps at 40px) */
+.theme-toggle__penrose .penrose-step use {
+  fill: color-mix(in srgb, #fafafa calc(var(--penrose-lit) * 80%), #c4c4cc);
+  stroke: none;
+}
+
+html[data-theme="dark"] .theme-toggle__penrose .penrose-wall--a,
+html[data-theme="dark"] .theme-toggle__penrose .penrose-wall--b {
+  fill: #3b82f6;
+}
+
+html[data-theme="dark"] .theme-toggle__penrose .penrose-wall--c,
+html[data-theme="dark"] .theme-toggle__penrose .penrose-wall--d {
+  fill: #71717a;
+}
+
+html[data-theme="dark"] .theme-toggle__penrose .penrose-wall--e {
+  fill: #52525b;
+}
+
+html[data-theme="dark"] .theme-toggle__penrose .penrose-step use {
+  fill: color-mix(in srgb, #fafafa calc(var(--penrose-lit) * 70%), #d4d4d8);
+}
+
+.theme-toggle:hover .theme-toggle__penrose .penrose-wall {
+  fill: color-mix(in srgb, var(--hazard-ink, #09090b) 70%, transparent);
+  stroke: var(--hazard-ink, #09090b);
+}
+
+.theme-toggle:hover .theme-toggle__penrose .penrose-wall--a,
+.theme-toggle:hover .theme-toggle__penrose .penrose-wall--b {
+  fill: var(--hazard-ink, #09090b);
+}
+
+.theme-toggle:hover .theme-toggle__penrose .penrose-step use {
+  fill: #fafafa;
+  stroke: var(--hazard-ink, #09090b);
+}
+
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+.theme-toggle .icon-moon {
+  display: block;
+}
+
+html[data-theme="dark"] .theme-toggle .icon-sun {
+  display: block;
+}
+
+html[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle {
+    transition: none;
+  }
+
+  .theme-toggle__penrose {
+    transform: none;
+    will-change: auto;
+  }
 }
 
 .site-nav a:not(.micro-btn) {
@@ -422,9 +627,9 @@ p,
   filter: contrast(1.08) grayscale(0.15);
 }
 
-/* Portrait plate — personal headshot (white studio bg) */
+/* Portrait plate — personal headshot (studio bg follows theme) */
 .hero-frame--portrait {
-  background: #f4f4f5;
+  background: var(--paper);
   aspect-ratio: 4 / 5;
   max-height: min(58vh, 520px);
 }
@@ -438,16 +643,16 @@ p,
 }
 
 .hero-frame--portrait .halftone {
-  opacity: 0.08;
-  mix-blend-mode: multiply;
+  opacity: calc(var(--noise-opacity) * 0.7);
+  mix-blend-mode: var(--noise-blend);
 }
 
 .halftone {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.18;
-  mix-blend-mode: multiply;
+  opacity: var(--noise-opacity);
+  mix-blend-mode: var(--noise-blend);
   background-image: radial-gradient(circle, var(--ink) 0.9px, transparent 1.1px);
   background-size: 4px 4px;
 }
@@ -835,7 +1040,7 @@ p,
 .accordion-item:hover,
 .accordion-item.is-open {
   flex: 2.2;
-  background: #fafafa;
+  background: var(--paper-2);
 }
 
 .accordion-item:focus-visible {
@@ -924,6 +1129,54 @@ p,
   gap: 0.75rem;
 }
 
+.cta-email-fallback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 0.85rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.cta-email-label {
+  color: color-mix(in srgb, var(--ink) 70%, transparent);
+}
+
+.cta-email-address {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.cta-email-address:hover {
+  color: var(--hazard);
+}
+
+.cta-email-copy {
+  font: inherit;
+  letter-spacing: inherit;
+  font-weight: 700;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.cta-email-copy:hover {
+  border-color: var(--hazard);
+  color: var(--hazard);
+}
+
+.cta-email-copy:focus-visible {
+  outline: 2px solid var(--hazard);
+  outline-offset: 2px;
+}
+
 /* Footer */
 .site-footer {
   display: flex;
@@ -935,8 +1188,7 @@ p,
   letter-spacing: 0.08em;
 }
 
-.footer-left,
-.footer-right {
+.footer-left {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;

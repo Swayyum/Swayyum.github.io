@@ -33,10 +33,6 @@
   margin-top: clamp(3.5rem, 8vw, 5.5rem);
 }
 
-.career-lead {
-  margin-bottom: 1.25rem;
-}
-
 .career-block-rule {
   display: inline-flex;
   align-items: center;
@@ -128,18 +124,44 @@
 .skill-mark {
   display: grid;
   place-items: center;
+  flex-shrink: 0;
   width: 1.7rem;
   height: 1.7rem;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--chip-mark-bg);
+  color: var(--chip-mark-fg);
+  border-radius: 0;
   font-size: 0.58rem;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
 
+/* Keep mark plate stable on hover so mono icons stay readable against hazard chip fill */
 .skill-chip:hover .skill-mark {
-  background: var(--hazard-ink);
-  color: var(--hazard);
+  background: var(--chip-mark-bg);
+  color: var(--chip-mark-fg);
+}
+
+.skill-icon-img,
+.skill-icon-svg {
+  display: block;
+  width: 0.95rem;
+  height: 0.95rem;
+  object-fit: contain;
+}
+
+.skill-icon-svg:not(.skill-icon-svg--fill) {
+  stroke: currentColor;
+}
+
+.skill-icon-svg--fill {
+  fill: currentColor;
+}
+
+.skill-mark-fallback {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
 }
 
 .skill-name {
@@ -166,11 +188,38 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  align-items: baseline;
+  align-items: center;
   padding: 0.85rem 1rem;
   border: 2px solid var(--line);
   background: var(--paper);
   text-transform: none;
+}
+
+.cert-mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 1.7rem;
+  height: 1.7rem;
+  background: var(--chip-mark-bg);
+  color: var(--chip-mark-fg);
+}
+
+.cert-mark .skill-icon-img,
+.cert-mark .skill-mark-fallback {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  object-fit: contain;
+}
+
+.cert-mark .skill-mark-fallback {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  width: auto;
+  height: auto;
 }
 
 .cert-name {
@@ -188,8 +237,26 @@
 .skills-certs-label {
   margin-top: 1.5rem;
   margin-bottom: 0.35rem;
-  font-size: 0.68rem;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
   letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+/* CERTIFICATION — match #skills > .career-block-rule ([ MY SKILLS ]) */
+#skills .skills-certs-label {
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+/* EDUCATION subsection under experience — separate sizing */
+#experience .skills-certs-label {
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  letter-spacing: 0.12em;
+  margin-top: 2rem;
+  margin-bottom: 0.55rem;
+  font-weight: 700;
 }
 
 /* Experience timeline */
@@ -268,11 +335,56 @@
   height: 2.75rem;
   display: grid;
   place-items: center;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--chip-mark-bg);
+  color: var(--chip-mark-fg);
   font-family: var(--font-display);
   font-size: 0.85rem;
   letter-spacing: -0.02em;
+}
+
+.exp-logo--img {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  box-sizing: border-box;
+  padding: 4px;
+  overflow: hidden;
+}
+
+.exp-logo--img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Theme swap: light + dark assets (logo / logoDark in career-data.js) */
+.exp-logo--img:has(.exp-logo__dark) img {
+  position: absolute;
+  inset: 4px;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+}
+
+.exp-logo--img .exp-logo__dark {
+  display: none;
+}
+
+html[data-theme="dark"] .exp-logo--img .exp-logo__light {
+  display: none;
+}
+
+html[data-theme="dark"] .exp-logo--img .exp-logo__dark {
+  display: block;
+}
+
+html[data-theme="dark"] .exp-logo--img:has(.exp-logo__dark) {
+  background: #09090b;
 }
 
 .exp-company-row {
@@ -431,31 +543,84 @@
   background: var(--hazard);
 }
 
+/* Section titles only — not cards / marquees / content; Skills & Experience stay in sync */
+#skills > .career-block-rule,
+#experience > .career-block-rule {
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+#skills > .career-block-rule::before,
+#skills > .career-block-rule::after,
+#experience > .career-block-rule::before,
+#experience > .career-block-rule::after {
+  width: 1.75rem;
+  height: 2.5px;
+}
+
 /* Education */
 .edu-rail {
-  margin-top: 1.5rem;
   display: grid;
   gap: 0.75rem;
 }
 
 .edu-card {
   display: grid;
-  grid-template-columns: 2.75rem minmax(0, 1fr);
+  grid-template-columns: 3rem minmax(0, 1fr);
   gap: 0.85rem;
+  align-items: start;
   padding: 1.1rem 1.15rem;
   border: 2px solid var(--line);
   background: var(--paper-2);
+  position: relative;
+  overflow: hidden;
 }
 
 .edu-mark {
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  background: var(--paper);
-  border: 2px solid var(--line);
+  width: 3rem;
+  height: 3rem;
+  background: var(--chip-mark-bg);
+  color: var(--chip-mark-fg);
+  border: 2px solid var(--chip-mark-bg);
   font-family: var(--font-display);
   font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.edu-mark svg {
+  width: 1.45rem;
+  height: 1.45rem;
+  display: block;
+}
+
+.edu-mark--pickaxe {
+  background: var(--paper-2);
+  border-color: var(--ink);
+  box-sizing: border-box;
+  width: 3rem;
+  height: 3rem;
+  min-width: 3rem;
+  min-height: 3rem;
+  max-width: 3rem;
+  max-height: 3rem;
+  padding: 5px;
+  overflow: hidden;
+}
+
+.edu-mark--pickaxe img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
+  object-position: center;
 }
 
 .edu-top {

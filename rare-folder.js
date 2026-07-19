@@ -55,8 +55,8 @@ function mountRareFolder(root) {
         <div class="rare-folder__flap" aria-hidden="true">
           <div class="rare-folder__flap-blur"></div>
           <svg viewBox="0 0 321 241" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="${FOLDER_FLAP_PATH}" fill="#292929" fill-opacity="0.35"/>
-            <path d="M25 0.5H136.084C142.905 0.5 149.417 3.3431 154.054 8.3457L177.713 33.874C182.539 39.0808 189.317 42.04 196.416 42.04H296C309.531 42.04 320.5 53.0092 320.5 66.54V216C320.5 229.531 309.531 240.5 296 240.5H25C11.469 240.5 0.5 229.531 0.5 216V25C0.5 11.469 11.469 0.5 25 0.5Z" stroke="#979797"/>
+            <path class="rare-folder__flap-fill" d="${FOLDER_FLAP_PATH}"/>
+            <path class="rare-folder__flap-stroke" d="M25 0.5H136.084C142.905 0.5 149.417 3.3431 154.054 8.3457L177.713 33.874C182.539 39.0808 189.317 42.04 196.416 42.04H296C309.531 42.04 320.5 53.0092 320.5 66.54V216C320.5 229.531 309.531 240.5 296 240.5H25C11.469 240.5 0.5 229.531 0.5 216V25C0.5 11.469 11.469 0.5 25 0.5Z"/>
           </svg>
         </div>
       </div>

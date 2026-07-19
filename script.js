@@ -1,5 +1,8 @@
 // Swayam Mehta — industrial studio + GSAP motion
 
+const CONTACT_EMAIL = "swayamehta1@gmail.com";
+const CONTACT_MAILTO = `mailto:${CONTACT_EMAIL}`;
+
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
@@ -119,6 +122,8 @@ function renderCtaActions() {
   const mount = document.getElementById("cta-actions");
   if (!mount || typeof createMicroButton !== "function") return;
 
+  const mailIcon = window.MICRO_ICONS?.mail || "";
+
   mount.innerHTML = [
     createMicroButton({
       href: "assets/Swayam_Mehta_Resume.pdf",
@@ -141,16 +146,50 @@ function renderCtaActions() {
       size: "xl",
       targetBlank: true,
     }),
-    createMicroButton({
-      href: "mailto:swayamehta1@gmail.com",
-      label: "Email Me",
-      micro: "slide-arrow",
-      icon: "mail",
-      icon2: "arrow",
-      variant: "ghost",
-      size: "xl",
-    }),
+    `<a class="micro-btn is-ghost is-xl" href="${CONTACT_MAILTO}">
+      <span class="micro-btn__inner">
+        <span class="micro-btn__icon">${mailIcon}</span>
+        <span class="micro-btn__label">Email Me</span>
+      </span>
+    </a>`,
   ].join("");
+}
+
+function initContactEmailFallback() {
+  const section = document.getElementById("contact");
+  if (!section || section.querySelector(".cta-email-fallback")) return;
+
+  const fallback = document.createElement("div");
+  fallback.className = "cta-email-fallback";
+  fallback.innerHTML = `
+    <span class="cta-email-label">Or email directly:</span>
+    <a class="cta-email-address" href="${CONTACT_MAILTO}">${CONTACT_EMAIL}</a>
+    <button type="button" class="cta-email-copy" aria-label="Copy email address to clipboard">Copy</button>
+  `;
+  section.appendChild(fallback);
+
+  const copyBtn = fallback.querySelector(".cta-email-copy");
+  copyBtn?.addEventListener("click", async () => {
+    const original = copyBtn.textContent;
+    try {
+      await navigator.clipboard.writeText(CONTACT_EMAIL);
+      copyBtn.textContent = "Copied";
+    } catch {
+      const input = document.createElement("textarea");
+      input.value = CONTACT_EMAIL;
+      input.setAttribute("readonly", "");
+      input.style.position = "fixed";
+      input.style.left = "-9999px";
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      input.remove();
+      copyBtn.textContent = "Copied";
+    }
+    window.setTimeout(() => {
+      copyBtn.textContent = original;
+    }, 2000);
+  });
 }
 
 function renderTelemetry() {
@@ -160,20 +199,14 @@ function renderTelemetry() {
   const apps = PRODUCTS.filter((p) => p.kind === "app");
   const plugins = PRODUCTS.filter((p) => p.kind === "raycast");
 
+  // Telemetry catalog is text-only; hero shots live in the stage stack below.
   const appCells = apps
     .map(
       (app) => {
         const stageHref = `#stage-${app.id}`;
-        const media = app.image
-          ? `<a class="telem-media" href="${stageHref}">
-              <img src="${app.image}" alt="${app.imageAlt || app.name}" loading="lazy" width="960" height="600">
-              <div class="halftone" aria-hidden="true"></div>
-            </a>`
-          : `<div class="telem-media is-empty" aria-hidden="true"></div>`;
 
         return `
-      <article class="telem-cell is-app${app.image ? " has-media" : ""}">
-        ${media}
+      <article class="telem-cell is-app">
         <div class="telem-body">
           <div>
             <div class="telem-top">
@@ -683,6 +716,7 @@ function initTelemHoverTilt() {
 renderTelemetry();
 renderStackCards();
 renderCtaActions();
+initContactEmailFallback();
 primeStageMedia();
 initMotion();
 initRippleFeedback();

@@ -249,7 +249,7 @@ test.describe("scroll reveal animations", () => {
 });
 
 test.describe("mailto contact links", () => {
-  test("hero and contact email links use swayamehta1@gmail.com and explicit navigation", async ({
+  test("hero and contact email links use swayamehta1@gmail.com without target blank", async ({
     page,
   }) => {
     await page.goto(BASE, { waitUntil: "networkidle" });
@@ -259,29 +259,63 @@ test.describe("mailto contact links", () => {
         href: el.getAttribute("href"),
         target: el.getAttribute("target"),
         bound: el.dataset.mailtoBound === "1",
+        isMicroBtn: el.classList.contains("micro-btn"),
       }))
     );
 
-    expect(links.length).toBeGreaterThanOrEqual(2);
+    expect(links.length).toBeGreaterThanOrEqual(3);
     for (const link of links) {
       expect(link.href).toBe("mailto:swayamehta1@gmail.com");
       expect(link.target).toBeNull();
-      expect(link.bound).toBe(true);
+      if (!link.isMicroBtn) {
+        expect(link.bound).toBe(false);
+      }
     }
 
-    const assignCalls = [];
-    await page.exposeFunction("recordMailtoAssign", (url) => assignCalls.push(url));
-    await page.evaluate(() => {
-      window.openMailto = (url) => window.recordMailtoAssign(url);
+    const heroMailto = links.find((link) => !link.isMicroBtn);
+    expect(heroMailto).toBeTruthy();
+    expect(heroMailto.bound).toBe(false);
+  });
+
+  test("openMailto uses a programmatic anchor click", async ({ page }) => {
+    await page.goto(BASE, { waitUntil: "networkidle" });
+
+    const clicked = await page.evaluate(() => {
+      let mailtoClicked = false;
+      const originalAppend = document.body.appendChild.bind(document.body);
+      document.body.appendChild = (node) => {
+        if (node instanceof HTMLAnchorElement && node.href.startsWith("mailto:")) {
+          node.click = () => {
+            mailtoClicked = true;
+          };
+        }
+        return originalAppend(node);
+      };
+
+      window.openMailto("mailto:swayamehta1@gmail.com");
+      return mailtoClicked;
     });
 
-    await page.locator('.hero-links a[href^="mailto:"]').click();
-    expect(assignCalls).toContain("mailto:swayamehta1@gmail.com");
+    expect(clicked).toBe(true);
+  });
 
-    assignCalls.length = 0;
+  test("contact email fallback copies swayamehta1@gmail.com", async ({ page, context }) => {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await page.goto(BASE, { waitUntil: "networkidle" });
     await page.locator("#contact").scrollIntoViewIfNeeded();
-    await page.waitForTimeout(500);
-    await page.locator('#cta-actions a[href^="mailto:"]').click();
-    expect(assignCalls).toContain("mailto:swayamehta1@gmail.com");
+
+    const fallback = page.locator(".cta-email-fallback");
+    await expect(fallback).toBeVisible();
+    await expect(fallback.locator(".cta-email-address")).toHaveText("swayamehta1@gmail.com");
+    await expect(fallback.locator(".cta-email-address")).toHaveAttribute(
+      "href",
+      "mailto:swayamehta1@gmail.com"
+    );
+
+    await fallback.locator(".cta-email-copy").click();
+    await expect(fallback.locator(".cta-email-copy")).toHaveText("Copied");
+
+    const clipboard = await page.evaluate(() => navigator.clipboard.readText());
+    expect(clipboard).toBe("swayamehta1@gmail.com");
   });
 });

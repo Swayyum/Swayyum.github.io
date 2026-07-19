@@ -2,11 +2,16 @@
 
 @keyframes pulse-mark {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.72; }
+  50% { opacity: 0.82; }
 }
 
 .brand-mark {
-  animation: pulse-mark 2.8s ease-in-out infinite;
+  animation: pulse-mark 3.2s ease-in-out infinite;
+}
+
+.brand:hover .brand-mark {
+  animation: none;
+  opacity: 1;
 }
 
 .hero-frame {

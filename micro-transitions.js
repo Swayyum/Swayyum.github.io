@@ -133,11 +133,18 @@ function bindMorphDone(root = document) {
 }
 
 function openMailto(href) {
-  window.location.assign(href);
+  const link = document.createElement("a");
+  link.href = href;
+  link.rel = "noopener noreferrer";
+  link.style.display = "none";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
 }
 
 function initMailtoLinks(root = document) {
-  root.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
+  // Plain mailto anchors use native navigation; only micro-buttons need a click shim.
+  root.querySelectorAll('a.micro-btn[href^="mailto:"]').forEach((link) => {
     link.removeAttribute("target");
     link.removeAttribute("rel");
     if (link.dataset.mailtoBound) return;
