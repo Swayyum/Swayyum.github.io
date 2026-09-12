@@ -3,9 +3,9 @@
 
 const SCROLL_SECTIONS = [
   { id: "top", label: "Intro" },
+  { id: "career", label: "Career" },
   { id: "units", label: "Units" },
   { id: "stack", label: "Stack" },
-  { id: "career", label: "Career" },
   { id: "dossier", label: "Dossier" },
   { id: "contact", label: "Contact" },
 ];
