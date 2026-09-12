@@ -4,8 +4,8 @@
 const CAREER = {
   skillRows: [
     {
-      id: "languages",
-      label: "Languages",
+      id: "core",
+      label: "Languages & AI",
       items: [
         { name: "Python", mark: "PY" },
         { name: "C++", mark: "C+" },
@@ -13,12 +13,6 @@ const CAREER = {
         { name: "TypeScript", mark: "TS" },
         { name: "SQL", mark: "SQ" },
         { name: "Bash", mark: "SH" },
-      ],
-    },
-    {
-      id: "ai-gpu",
-      label: "AI & GPU computing",
-      items: [
         { name: "Agentic AI", mark: "AG" },
         { name: "LLM tool calling", mark: "LL" },
         { name: "RAG", mark: "RG" },
@@ -29,33 +23,8 @@ const CAREER = {
       ],
     },
     {
-      id: "infra",
-      label: "Infrastructure & DevOps",
-      items: [
-        { name: "Linux", mark: "LX" },
-        { name: "Docker", mark: "DK" },
-        { name: "Docker Compose", mark: "DC" },
-        { name: "GitHub Actions", mark: "GH" },
-        { name: "GHCR", mark: "CR" },
-        { name: "Azure App Service", mark: "AZ" },
-        { name: "CI / CD", mark: "CI" },
-      ],
-    },
-    {
-      id: "observe",
-      label: "Monitoring & reliability",
-      items: [
-        { name: "Grafana", mark: "GF" },
-        { name: "Loki", mark: "LK" },
-        { name: "Tempo", mark: "TP" },
-        { name: "OpenTelemetry", mark: "OT" },
-        { name: "Sentry", mark: "SE" },
-        { name: "Production troubleshooting", mark: "OPS" },
-      ],
-    },
-    {
-      id: "backend",
-      label: "Backend & data",
+      id: "platform",
+      label: "Backend, data & ops",
       items: [
         { name: "ASP.NET Core", mark: "NET" },
         { name: "FastAPI", mark: "FA" },
@@ -64,24 +33,28 @@ const CAREER = {
         { name: "SQL Server", mark: "SS" },
         { name: "REST APIs", mark: "API" },
         { name: "Hangfire", mark: "HF" },
+        { name: "Linux", mark: "LX" },
+        { name: "Docker", mark: "DK" },
+        { name: "Docker Compose", mark: "DC" },
+        { name: "GitHub Actions", mark: "GH" },
+        { name: "Azure App Service", mark: "AZ" },
+        { name: "CI / CD", mark: "CI" },
       ],
     },
     {
-      id: "frontend",
-      label: "Frontend & testing",
+      id: "product",
+      label: "Frontend, monitoring & identity",
       items: [
         { name: "React", mark: "RE" },
         { name: "Next.js", mark: "NX" },
-        { name: "xUnit", mark: "XU" },
         { name: "pytest", mark: "PT" },
         { name: "Vitest", mark: "VT" },
         { name: "Playwright", mark: "PW" },
-      ],
-    },
-    {
-      id: "identity",
-      label: "Identity & integration",
-      items: [
+        { name: "Grafana", mark: "GF" },
+        { name: "Loki", mark: "LK" },
+        { name: "Tempo", mark: "TP" },
+        { name: "OpenTelemetry", mark: "OT" },
+        { name: "Sentry", mark: "SE" },
         { name: "Entra ID", mark: "EN" },
         { name: "OAuth 2.0", mark: "OA" },
         { name: "MSAL", mark: "MS" },

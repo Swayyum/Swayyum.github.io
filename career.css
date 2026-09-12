@@ -66,10 +66,10 @@
 .skills-marquees {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.45rem;
   border: 2px solid var(--line);
   background: var(--paper-2);
-  padding: 0.85rem 0;
+  padding: 0.55rem 0;
   overflow: hidden;
 }
 
@@ -104,13 +104,13 @@
 .skill-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  padding: 0.45rem 0.7rem 0.45rem 0.45rem;
-  border: 2px solid var(--line);
+  gap: 0.4rem;
+  padding: 0.3rem 0.55rem 0.3rem 0.3rem;
+  border: 1.5px solid var(--line);
   background: var(--paper);
   white-space: nowrap;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
   text-transform: none;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
@@ -125,12 +125,12 @@
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.35rem;
+  height: 1.35rem;
   background: var(--chip-mark-bg);
   color: var(--chip-mark-fg);
   border-radius: 0;
-  font-size: 0.58rem;
+  font-size: 0.5rem;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
@@ -144,8 +144,8 @@
 .skill-icon-img,
 .skill-icon-svg {
   display: block;
-  width: 0.95rem;
-  height: 0.95rem;
+  width: 0.8rem;
+  height: 0.8rem;
   object-fit: contain;
 }
 
@@ -546,9 +546,9 @@ html[data-theme="dark"] .exp-logo--img:has(.exp-logo__dark) {
 /* Section titles only — not cards / marquees / content; Skills & Experience stay in sync */
 #skills > .career-block-rule,
 #experience > .career-block-rule {
-  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  font-size: clamp(0.78rem, 1.4vw, 0.95rem);
   letter-spacing: 0.1em;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   font-weight: 700;
 }
 
