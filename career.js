@@ -52,12 +52,14 @@
     ),
   };
 
-  /** name → local file or inline concept SVG (existing CAREER.skillRows only) */
+  /** name → local file or inline concept SVG */
   const SKILL_ICON_FILES = {
     Python: "python.svg",
+    "C++": "cplusplus.svg",
     "C / C++": "cplusplus.svg",
     Java: "openjdk.svg",
     JavaScript: "javascript.svg",
+    TypeScript: "javascript.svg",
     Bash: "gnubash.svg",
     PyTorch: "pytorch.svg",
     TensorFlow: "tensorflow.svg",
@@ -65,8 +67,10 @@
     NumPy: "numpy.svg",
     Pandas: "pandas.svg",
     Azure: "microsoftazure.svg",
+    "Azure App Service": "microsoftazure.svg",
     "Azure DevOps": "azuredevops.svg",
     Docker: "docker.svg",
+    "Docker Compose": "docker.svg",
     Linux: "linux.svg",
     PostgreSQL: "postgresql.svg",
     MongoDB: "mongodb.svg",
@@ -78,8 +82,14 @@
     "Machine learning": ICON_SVG.brain,
     "Deep learning": ICON_SVG.layers,
     "Computer vision": ICON_SVG.eye,
+    "Agentic AI": ICON_SVG.brain,
+    "LLM tool calling": ICON_SVG.workflow,
+    RAG: ICON_SVG.layers,
     SQL: ICON_SVG.database,
+    "SQL Server": ICON_SVG.database,
+    "REST APIs": ICON_SVG.workflow,
     "CI / CD": ICON_SVG.workflow,
+    "GitHub Actions": ICON_SVG.workflow,
   };
 
   function skillIcon(item) {
@@ -112,15 +122,25 @@
       .join("");
 
     const certEl = document.getElementById("skills-certs");
-    if (certEl && CAREER.certifications?.length) {
-      certEl.innerHTML = CAREER.certifications
-        .map((c) => {
-          const mark = c.icon
-            ? `<span class="cert-mark" aria-hidden="true">${localIcon(c.icon, { name: c.issuer, mark: (c.issuer || "?").slice(0, 2).toUpperCase() })}</span>`
-            : "";
-          return `<li>${mark}<span class="cert-name">${esc(c.name)}</span><span class="cert-issuer">${esc(c.issuer)}</span></li>`;
-        })
-        .join("");
+    const certLabel = document.querySelector(".skills-certs-label");
+    if (certEl) {
+      const certs = CAREER.certifications || [];
+      if (!certs.length) {
+        certEl.innerHTML = "";
+        certEl.hidden = true;
+        if (certLabel) certLabel.hidden = true;
+      } else {
+        certEl.hidden = false;
+        if (certLabel) certLabel.hidden = false;
+        certEl.innerHTML = certs
+          .map((c) => {
+            const mark = c.icon
+              ? `<span class="cert-mark" aria-hidden="true">${localIcon(c.icon, { name: c.issuer, mark: (c.issuer || "?").slice(0, 2).toUpperCase() })}</span>`
+              : "";
+            return `<li>${mark}<span class="cert-name">${esc(c.name)}</span><span class="cert-issuer">${esc(c.issuer)}</span></li>`;
+          })
+          .join("");
+      }
     }
   }
 

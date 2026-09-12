@@ -63,8 +63,8 @@ const PRODUCTS = [
     ],
   },
   {
-    id: "oura-menu-bar",
-    name: "Oura Menu Bar",
+    id: "lumen",
+    name: "Lumen",
     kind: "app",
     featured: true,
     status: "shipped",
@@ -74,7 +74,7 @@ const PRODUCTS = [
     description:
       "Opens from the menu bar with Readiness, Sleep, and Activity at a glance. OAuth-protected sync, Keychain storage, and context-aware reminders — your data stays on your Mac.",
     image: "assets/oura-menu-bar-readme.png",
-    imageAlt: "Oura Menu Bar showing recovery scores and move reminders in the macOS menu bar",
+    imageAlt: "Lumen showing recovery scores and move reminders in the macOS menu bar",
     accent: "#1d4ed8",
     links: [
       {
