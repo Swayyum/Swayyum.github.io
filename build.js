@@ -21,7 +21,7 @@ if (!fs.existsSync(buildDir)) {
 }
 
 // Copy files to dist (for now, just a placeholder)
-const filesToCopy = ['index.html', 'styles.css', 'script.js', 'three-scene.js', 'theme.js', 'theme-toggle-liquid.js'];
+const filesToCopy = ['index.html', 'styles.css', 'script.js', 'three-scene.js', 'theme.js', 'theme-toggle-liquid.js', 'crt-entrance.js', 'crt-entrance.css', 'crt-computer-scene.js'];
 
 filesToCopy.forEach(file => {
     const srcPath = path.join(__dirname, file);

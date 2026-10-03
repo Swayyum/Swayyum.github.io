@@ -18,6 +18,18 @@
             : "light";
       document.documentElement.setAttribute("data-theme", theme);
       document.documentElement.style.colorScheme = theme;
+
+      // CRT entrance (Cyze ivory-classic): lock before paint for fresh visits.
+      try {
+        const params = new URLSearchParams(location.search);
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const seen = sessionStorage.getItem("swayam-crt-entered") === "1";
+        if (!reduce && !seen && params.get("crt") !== "0") {
+          document.documentElement.classList.add("computer-entry");
+        }
+      } catch (_) {
+        /* private mode / blocked storage */
+      }
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,8 +40,54 @@
   <link rel="stylesheet" href="micro-transitions.css">
   <link rel="stylesheet" href="rare-ui.css">
   <link rel="stylesheet" href="motion-polish.css">
+  <link rel="stylesheet" href="crt-entrance.css">
 </head>
 <body>
+  <section
+    data-computer-entrance
+    aria-hidden="true"
+    aria-label="Computer showing the portfolio"
+  >
+    <header class="crt-hud">
+      <div class="crt-hud__brand">
+        <span class="crt-hud__kicker">&lt; AI &amp; SYSTEMS ENGINEER &gt;</span>
+        <strong class="crt-hud__name">SWAYAM MEHTA</strong>
+        <span class="crt-hud__meta">Fluxon · Typatro · Lumen</span>
+      </div>
+      <div class="crt-hud__actions">
+        <button type="button" class="crt-entrance__skip" data-crt-skip>Skip</button>
+      </div>
+    </header>
+
+    <nav class="crt-hud__links" aria-label="Quick links">
+      <a href="assets/Swayam_Mehta_Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>
+      <a href="https://github.com/Swayyum" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://linkedin.com/in/swayam-mehta" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="mailto:swayamehta1@gmail.com">Email</a>
+    </nav>
+
+    <img
+      class="computer-poster"
+      src="assets/crt/ivory-classic/poster.webp"
+      alt=""
+      width="480"
+      height="480"
+      fetchpriority="high"
+      decoding="async"
+    >
+    <div class="computer-stage" data-computer-stage aria-hidden="true"></div>
+    <button
+      type="button"
+      class="computer-screen-hit"
+      data-computer-enter
+      aria-label="Enter the site"
+    ></button>
+
+    <footer class="crt-hud__foot">
+      <p class="crt-entrance__hint">Click the screen to enter · Esc skips</p>
+      <button type="button" class="crt-hud__enter" data-computer-enter>Enter site</button>
+    </footer>
+  </section>
   <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="noise" aria-hidden="true"></div>
   <div class="crosshair crosshair-tl" aria-hidden="true">+</div>
@@ -394,6 +452,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script type="module" src="crt-entrance.js"></script>
   <script src="theme.js"></script>
   <script type="module" src="theme-toggle-liquid.js"></script>
   <script src="micro-transitions.js"></script>

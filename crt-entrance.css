@@ -1,0 +1,306 @@
+/* CRT Screen Zoom — Cyze ivory-classic frames (assets/crt/ivory-classic) */
+
+:root {
+  --crt-page-bg: var(--paper);
+  --crt-text: var(--ink);
+  --crt-accent: var(--hazard);
+  --crt-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Grade ivory Mac shell toward cool zinc (feeds WebGL colour matrix from .computer-poster). */
+  --crt-shell-filter: saturate(0.08) brightness(0.78) contrast(1.18);
+}
+
+html.computer-entry {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+html.computer-entry body > main,
+html.computer-entry body > .site-footer {
+  visibility: hidden;
+}
+
+html.computer-handover body > main {
+  visibility: visible;
+  will-change: transform;
+}
+
+html.computer-entry.computer-handover [data-computer-entrance] {
+  background: transparent;
+}
+
+[data-computer-entrance] {
+  display: none;
+  outline: none;
+}
+
+html.computer-entry [data-computer-entrance] {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: block;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 50% 42%,
+      color-mix(in srgb, var(--hazard) 14%, transparent),
+      transparent 70%
+    ),
+    var(--crt-page-bg);
+  color: var(--crt-text);
+  touch-action: none;
+}
+
+.computer-poster {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + min(100vh, 150vw) * 0.01);
+  width: calc(min(100vh, 150vw) * 0.3);
+  height: auto;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  filter: var(--crt-shell-filter);
+  animation: computer-arrive 0.38s var(--crt-ease) both;
+  mask-image:
+    linear-gradient(to right, transparent, #000 12%, #000 88%, transparent),
+    linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 12%, #000 88%, transparent),
+    linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-composite: source-in;
+}
+
+[data-computer-entrance][data-ready="true"] .computer-poster {
+  visibility: hidden;
+  transition: visibility 0s 0.24s;
+}
+
+@keyframes computer-arrive {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 8px));
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.computer-stage {
+  position: absolute;
+  inset: 0;
+}
+
+.computer-stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.22s var(--crt-ease);
+}
+
+[data-computer-entrance][data-ready="true"] .computer-stage canvas {
+  opacity: 1;
+}
+
+.computer-screen-hit {
+  position: absolute;
+  z-index: 3;
+  left: 37%;
+  top: 28%;
+  width: 26%;
+  height: 28%;
+  border-radius: 12%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.computer-screen-hit:focus-visible {
+  outline: 2px solid var(--crt-accent);
+  outline-offset: 7px;
+}
+
+.crt-hud,
+.crt-hud__links,
+.crt-hud__foot {
+  position: absolute;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.crt-hud {
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+}
+
+.crt-hud__brand {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.crt-hud__kicker {
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hazard);
+}
+
+.crt-hud__name {
+  font-family: var(--font-display, "Archivo Black", sans-serif);
+  font-size: clamp(1.15rem, 2.4vw, 1.65rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.crt-hud__meta {
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+
+.crt-hud__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.crt-entrance__skip,
+.crt-hud__enter {
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+}
+
+.crt-hud__enter {
+  background: var(--hazard);
+  border-color: var(--hazard);
+  color: #fff;
+}
+
+.crt-entrance__skip:hover,
+.crt-entrance__skip:focus-visible,
+.crt-hud__enter:hover,
+.crt-hud__enter:focus-visible {
+  background: var(--hazard);
+  color: #fff;
+  border-color: var(--hazard);
+  outline: none;
+}
+
+.crt-hud__enter:hover,
+.crt-hud__enter:focus-visible {
+  filter: brightness(1.08);
+}
+
+.crt-hud__links {
+  top: 50%;
+  left: 1.1rem;
+  transform: translateY(-50%);
+  display: grid;
+  gap: 0.45rem;
+}
+
+.crt-hud__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 35%, transparent);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  color: var(--ink);
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  backdrop-filter: blur(6px);
+}
+
+.crt-hud__links a:hover,
+.crt-hud__links a:focus-visible {
+  border-color: var(--hazard);
+  color: var(--hazard);
+  outline: none;
+}
+
+.crt-hud__foot {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+  padding: 1rem 1.1rem 1.25rem;
+}
+
+.crt-entrance__hint {
+  margin: 0;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+html.computer-zooming .crt-hud,
+html.computer-zooming .crt-hud__links,
+html.computer-zooming .crt-hud__foot,
+html.computer-zooming .crt-entrance__skip {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s var(--crt-ease);
+}
+
+@media (max-width: 720px) {
+  .crt-hud__links {
+    top: auto;
+    bottom: 4.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    grid-auto-flow: column;
+    gap: 0.35rem;
+  }
+
+  .crt-hud__meta {
+    display: none;
+  }
+
+  .crt-entrance__hint {
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .computer-poster {
+    animation: none;
+  }
+}
