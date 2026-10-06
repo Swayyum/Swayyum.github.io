@@ -67,7 +67,7 @@ const CAREER = {
     {
       id: "mckim-creed",
       company: "McKim & Creed",
-      role: "AI Specialist I",
+      role: "AI Specialist II",
       location: "Raleigh, NC",
       start: "April 2026",
       end: "Present",

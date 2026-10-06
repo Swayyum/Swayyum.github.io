@@ -12,7 +12,7 @@
 - This repo is the Swayyum / Swayam Mehta product-studio landing page (vanilla HTML/CSS/JS + GSAP).
 - Product catalog is driven by `products.js` (`kind: "app"` or `"raycast"`); shipped items include Fluxon, Typatro, Lumen, IP Finder, and Bhagavad Gita Quotes.
 - Lumen (display name; catalog id `lumen`) links should use the public repo/releases (`Swayyum/oura-menu-bar`), which hosts the DMG — not a private repo.
-- Career sections (skills, experience, education, GitHub contributions) are driven by `career-data.js`; experience includes McKim & Creed (AI Specialist I, Apr 2026–Present) and SAM Analytic Solutions / SSAM (Junior AI & Systems Engineer, May 2024–Apr 2026) with light/dark logo pairs. Resume PDF at `assets/Swayam_Mehta_Resume.pdf` is the content source of truth.
+- Career sections (skills, experience, education, GitHub contributions) are driven by `career-data.js`; experience includes McKim & Creed (AI Specialist II, Apr 2026–Present) and SAM Analytic Solutions / SSAM (Junior AI & Systems Engineer, May 2024–Apr 2026) with light/dark logo pairs. Resume PDF at `assets/Swayam_Mehta_Resume.pdf` is the content source of truth.
 - Hero and page title/meta position Swayam as an AI & Systems Engineer (aligned with the resume), not generic founder/product-studio framing.
 - Theme switching uses `html[data-theme="light"|"dark"]` via `theme.js` (storage key `swayam-theme`); the header toggle is LiquidMetal (`theme-toggle-liquid.js`) with crisp sun/moon destination glyphs over the metal plate.
 - Contact email on the site is `swayamehta1@gmail.com` (`mailto:` links / `CONTACT_EMAIL` in `script.js`).
